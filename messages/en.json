@@ -1,0 +1,188 @@
+{
+  "meta": {
+    "title": "OY Lab · Frontier research in computing, from Central Asia",
+    "description": "OY Lab is a frontier research lab in Tashkent studying how machines learn, compute and reason. Open models, scientific computing and the people behind them.",
+    "siteName": "OY Lab"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "moonAlt": "The moon tonight: {phase}, {percent}% lit",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language",
+    "toLight": "Switch to the light theme",
+    "toDark": "Switch to the night theme",
+    "placeholder": "Placeholder content, to be replaced with real data"
+  },
+  "nav": {
+    "research": "Research",
+    "process": "Process",
+    "team": "Team",
+    "publications": "Publications",
+    "contact": "Contact",
+    "join": "Join the lab"
+  },
+  "hero": {
+    "eyebrow": "Frontier research lab · Tashkent",
+    "title": "Research that moves computing forward, from Central Asia.",
+    "lead": "OY Lab is a frontier research lab in Tashkent. We study how machines learn, compute and reason, and we build the open models, tools and people that Central Asia needs to take part in that work.",
+    "primary": "Read the research",
+    "secondary": "Join the lab",
+    "tonight": "Tonight"
+  },
+  "stats": {
+    "founded": "Founded",
+    "researchers": "Researchers",
+    "papers": "Papers",
+    "releases": "Open releases"
+  },
+  "mission": {
+    "eyebrow": "Why we exist",
+    "statement": "A region of eighty million people should not only consume the frontier of computing. It should help define it.",
+    "goals": [
+      {
+        "title": "Do frontier-level work from Tashkent",
+        "body": "Research that is judged by the same reviewers, benchmarks and peers as anywhere else, and that holds up."
+      },
+      {
+        "title": "Make computing speak our languages",
+        "body": "Uzbek, Karakalpak and the wider Turkic family are low-resource today. We build the data, models and tools that change that."
+      },
+      {
+        "title": "Grow the people, not just the papers",
+        "body": "Every project trains researchers and engineers who stay in the region and start the next thing."
+      },
+      {
+        "title": "Publish and release in the open",
+        "body": "Papers, weights, code and datasets are released so that others can check our work and build on it."
+      }
+    ]
+  },
+  "research": {
+    "eyebrow": "Research",
+    "title": "Four questions we keep returning to.",
+    "lead": "Each area is small enough to own and large enough to matter. The borders between them are deliberately porous.",
+    "areas": {
+      "models": {
+        "title": "Open models for Turkic languages",
+        "body": "Pretraining, tokenization and evaluation for Uzbek, Karakalpak and their neighbours, released with weights and data."
+      },
+      "science": {
+        "title": "Scientific computing",
+        "body": "Numerical methods and learned surrogates for physics, climate and materials problems that matter locally."
+      },
+      "systems": {
+        "title": "Efficient systems",
+        "body": "Training and serving on the hardware we actually have: quantization, scheduling and memory-aware kernels."
+      },
+      "applied": {
+        "title": "Applied research in the field",
+        "body": "Agriculture, water, energy and health, in partnership with the people who run them. Deployed, measured, revised."
+      }
+    }
+  },
+  "process": {
+    "eyebrow": "How we work",
+    "title": "Research in phases.",
+    "lead": "Oy means moon. Every project follows the same cycle, and we try to be honest about which phase we are in.",
+    "steps": [
+      {
+        "phase": "New moon",
+        "title": "Question",
+        "body": "A problem worth a year. We write the question, the baseline and the way we will know we were wrong."
+      },
+      {
+        "phase": "Waxing",
+        "title": "Experiment",
+        "body": "Small, fast, falsifiable runs. Negative results are logged with the same care as positive ones."
+      },
+      {
+        "phase": "Full moon",
+        "title": "Publish",
+        "body": "Paper, weights, code and data go out together. Reviewers and the community get everything they need to reproduce it."
+      },
+      {
+        "phase": "Waning",
+        "title": "Deploy and reflect",
+        "body": "The work meets real users. What breaks becomes the next question, and the cycle starts again."
+      }
+    ]
+  },
+  "team": {
+    "eyebrow": "Team",
+    "title": "The people behind the work.",
+    "lead": "Researchers and engineers based in Tashkent, with collaborators across Central Asia and beyond.",
+    "members": {
+      "rahimova": {
+        "role": "Director of research",
+        "focus": "Foundation models"
+      },
+      "toshmatov": {
+        "role": "Systems lead",
+        "focus": "Efficient training and inference"
+      },
+      "yusupova": {
+        "role": "Research scientist",
+        "focus": "Scientific computing"
+      },
+      "karimov": {
+        "role": "Machine learning engineer",
+        "focus": "Data and evaluation"
+      },
+      "saidova": {
+        "role": "Research scientist",
+        "focus": "Turkic language processing"
+      },
+      "abdullayev": {
+        "role": "Research engineer",
+        "focus": "Applied systems"
+      }
+    }
+  },
+  "publications": {
+    "eyebrow": "Publications",
+    "title": "Recent work.",
+    "viewAll": "All publications",
+    "read": "Read"
+  },
+  "join": {
+    "eyebrow": "Join",
+    "title": "Work with us.",
+    "lead": "We hire slowly and for the long run. If you want to do serious research from Tashkent, write to us.",
+    "roles": [
+      "Research scientist",
+      "Machine learning engineer",
+      "Research intern"
+    ],
+    "openRoles": "Open roles",
+    "contactTitle": "Contact",
+    "address": "Tashkent, Uzbekistan",
+    "addressLabel": "Address",
+    "coordinates": "Coordinates",
+    "write": "Write to us"
+  },
+  "footer": {
+    "tagline": "Frontier research in computing, from Central Asia.",
+    "tonight": "Tonight: {phase}, {percent}% lit",
+    "rights": "© {year} OY Lab. All rights reserved.",
+    "languages": "Languages"
+  },
+  "moon": {
+    "phases": {
+      "new": "new moon",
+      "waxingCrescent": "waxing crescent",
+      "firstQuarter": "first quarter",
+      "waxingGibbous": "waxing gibbous",
+      "full": "full moon",
+      "waningGibbous": "waning gibbous",
+      "lastQuarter": "last quarter",
+      "waningCrescent": "waning crescent"
+    }
+  },
+  "notFound": {
+    "title": "This page is in shadow.",
+    "body": "The address does not exist or has moved.",
+    "back": "Back to the start"
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "meta": {
+    "title": "OY Lab · Markaziy Osiyodan hisoblash fani boʼyicha ilgʼor tadqiqotlar",
+    "description": "OY Lab — Toshkentdagi ilgʼor tadqiqot laboratoriyasi. Biz mashinalar qanday oʼrganishi, hisoblashi va fikr yuritishini oʼrganamiz. Ochiq modellar, ilmiy hisoblash va ular ortidagi insonlar.",
+    "siteName": "OY Lab"
+  },
+  "a11y": {
+    "skipToContent": "Asosiy mazmunga oʼtish",
+    "mainNavigation": "Asosiy navigatsiya",
+    "moonAlt": "Bugungi oy: {phase}, {percent}% yoritilgan",
+    "openMenu": "Menyuni ochish",
+    "closeMenu": "Menyuni yopish",
+    "language": "Til",
+    "toLight": "Yorugʼ mavzuga oʼtish",
+    "toDark": "Tungi mavzuga oʼtish",
+    "placeholder": "Namuna mazmun, haqiqiy maʼlumotlar bilan almashtiriladi"
+  },
+  "nav": {
+    "research": "Tadqiqot",
+    "process": "Jarayon",
+    "team": "Jamoa",
+    "publications": "Nashrlar",
+    "contact": "Aloqa",
+    "join": "Jamoaga qoʼshiling"
+  },
+  "hero": {
+    "eyebrow": "Ilgʼor tadqiqot laboratoriyasi · Toshkent",
+    "title": "Hisoblash fanini oldinga suradigan tadqiqotlar. Markaziy Osiyodan.",
+    "lead": "OY Lab — Toshkentdagi ilgʼor tadqiqot laboratoriyasi. Biz mashinalar qanday oʼrganishi, hisoblashi va fikr yuritishini oʼrganamiz hamda Markaziy Osiyo bu ishda ishtirok etishi uchun zarur boʼlgan ochiq modellar, vositalar va mutaxassislarni yaratamiz.",
+    "primary": "Tadqiqotlarni oʼqish",
+    "secondary": "Jamoaga qoʼshiling",
+    "tonight": "Bugun"
+  },
+  "stats": {
+    "founded": "Tashkil etilgan",
+    "researchers": "Tadqiqotchilar",
+    "papers": "Maqolalar",
+    "releases": "Ochiq relizlar"
+  },
+  "mission": {
+    "eyebrow": "Nega biz bormiz",
+    "statement": "Sakson million aholiga ega mintaqa hisoblash fanining ilgʼor chegarasini faqat isteʼmol qilishi kerak emas. U bu chegarani belgilashda ishtirok etishi kerak.",
+    "goals": [
+      {
+        "title": "Toshkentdan ilgʼor darajadagi ish qilish",
+        "body": "Dunyoning istalgan nuqtasidagi kabi taqrizchilar, benchmarklar va hamkasblar tomonidan baholanadigan va sinovdan oʼtadigan tadqiqotlar."
+      },
+      {
+        "title": "Hisoblashni oʼz tillarimizda gapirtirish",
+        "body": "Oʼzbek, qoraqalpoq va keng turkiy tillar oilasi bugun kam resursli. Biz bu holatni oʼzgartiradigan maʼlumotlar, modellar va vositalarni yaratamiz."
+      },
+      {
+        "title": "Faqat maqolalar emas, insonlarni yetishtirish",
+        "body": "Har bir loyiha mintaqada qoladigan va navbatdagi ishni boshlaydigan tadqiqotchilar va muhandislarni tayyorlaydi."
+      },
+      {
+        "title": "Ochiq nashr qilish va chiqarish",
+        "body": "Maqolalar, model vaznlari, kod va maʼlumotlar toʼplamlari boshqalar ishimizni tekshirishi va unga tayanishi uchun ochiq chiqariladi."
+      }
+    ]
+  },
+  "research": {
+    "eyebrow": "Tadqiqot",
+    "title": "Biz qayta-qayta murojaat qiladigan toʼrt savol.",
+    "lead": "Har bir yoʼnalish egalik qilish uchun yetarlicha kichik va ahamiyatli boʼlish uchun yetarlicha katta. Ular orasidagi chegaralar ataylab oʼtkazuvchan.",
+    "areas": {
+      "models": {
+        "title": "Turkiy tillar uchun ochiq modellar",
+        "body": "Oʼzbek, qoraqalpoq va qoʼshni tillar uchun oldindan oʼrgatish, tokenizatsiya va baholash — vaznlar va maʼlumotlar bilan birga chiqariladi."
+      },
+      "science": {
+        "title": "Ilmiy hisoblash",
+        "body": "Mahalliy ahamiyatga ega fizika, iqlim va materiallar masalalari uchun sonli usullar va oʼrgatilgan surrogat modellar."
+      },
+      "systems": {
+        "title": "Samarali tizimlar",
+        "body": "Bizda mavjud boʼlgan uskunada oʼrgatish va xizmat koʼrsatish: kvantlash, rejalashtirish va xotirani hisobga oladigan yadrolar."
+      },
+      "applied": {
+        "title": "Amaliy tadqiqotlar — joyida",
+        "body": "Qishloq xoʼjaligi, suv, energetika va sogʼliqni saqlash — ularni boshqaradigan insonlar bilan hamkorlikda. Joriy etilgan, oʼlchangan, qayta koʼrilgan."
+      }
+    }
+  },
+  "process": {
+    "eyebrow": "Qanday ishlaymiz",
+    "title": "Tadqiqot — fazalarda.",
+    "lead": "Oy — bu oy. Har bir loyiha bir xil siklni bosib oʼtadi, va biz qaysi fazada ekanimizni ochiq aytishga harakat qilamiz.",
+    "steps": [
+      {
+        "phase": "Yangi oy",
+        "title": "Savol",
+        "body": "Bir yilga arziydigan muammo. Biz savolni, boshlangʼich darajani va xato qilganimizni qanday bilishimizni yozib qoʼyamiz."
+      },
+      {
+        "phase": "Oʼsayotgan oy",
+        "title": "Tajriba",
+        "body": "Kichik, tez va tekshirsa boʼladigan sinovlar. Salbiy natijalar ham ijobiylari kabi diqqat bilan qayd etiladi."
+      },
+      {
+        "phase": "Toʼlin oy",
+        "title": "Nashr",
+        "body": "Maqola, vaznlar, kod va maʼlumotlar birga chiqadi. Taqrizchilar va hamjamiyat uni qayta tiklash uchun zarur boʼlgan hamma narsani oladi."
+      },
+      {
+        "phase": "Kamayayotgan oy",
+        "title": "Joriy etish va mushohada",
+        "body": "Ish haqiqiy foydalanuvchilar bilan uchrashadi. Nima buzilsa, u navbatdagi savolga aylanadi va sikl qaytadan boshlanadi."
+      }
+    ]
+  },
+  "team": {
+    "eyebrow": "Jamoa",
+    "title": "Ish ortidagi insonlar.",
+    "lead": "Toshkentda joylashgan tadqiqotchilar va muhandislar, Markaziy Osiyo va undan tashqaridagi hamkorlar bilan.",
+    "members": {
+      "rahimova": {
+        "role": "Tadqiqot direktori",
+        "focus": "Asosiy modellar"
+      },
+      "toshmatov": {
+        "role": "Tizimlar rahbari",
+        "focus": "Samarali oʼrgatish va inferens"
+      },
+      "yusupova": {
+        "role": "Ilmiy xodim",
+        "focus": "Ilmiy hisoblash"
+      },
+      "karimov": {
+        "role": "Mashinaviy oʼrganish muhandisi",
+        "focus": "Maʼlumotlar va baholash"
+      },
+      "saidova": {
+        "role": "Ilmiy xodim",
+        "focus": "Turkiy tillarni qayta ishlash"
+      },
+      "abdullayev": {
+        "role": "Tadqiqot muhandisi",
+        "focus": "Amaliy tizimlar"
+      }
+    }
+  },
+  "publications": {
+    "eyebrow": "Nashrlar",
+    "title": "Soʼnggi ishlar.",
+    "viewAll": "Barcha nashrlar",
+    "read": "Oʼqish"
+  },
+  "join": {
+    "eyebrow": "Qoʼshilish",
+    "title": "Biz bilan ishlang.",
+    "lead": "Biz sekin va uzoq muddatga yollaymiz. Agar Toshkentdan jiddiy tadqiqot qilishni istasangiz, bizga yozing.",
+    "roles": [
+      "Ilmiy xodim",
+      "Mashinaviy oʼrganish muhandisi",
+      "Tadqiqot stajyori"
+    ],
+    "openRoles": "Ochiq oʼrinlar",
+    "contactTitle": "Aloqa",
+    "address": "Toshkent, Oʼzbekiston",
+    "addressLabel": "Manzil",
+    "coordinates": "Koordinatalar",
+    "write": "Bizga yozing"
+  },
+  "footer": {
+    "tagline": "Markaziy Osiyodan hisoblash fani boʼyicha ilgʼor tadqiqotlar.",
+    "tonight": "Bugun: {phase}, {percent}% yoritilgan",
+    "rights": "© {year} OY Lab. Barcha huquqlar himoyalangan.",
+    "languages": "Tillar"
+  },
+  "moon": {
+    "phases": {
+      "new": "yangi oy",
+      "waxingCrescent": "oʼsayotgan hilol",
+      "firstQuarter": "birinchi chorak",
+      "waxingGibbous": "oʼsayotgan toʼlinroq oy",
+      "full": "toʼlin oy",
+      "waningGibbous": "kamayayotgan toʼlinroq oy",
+      "lastQuarter": "soʼnggi chorak",
+      "waningCrescent": "kamayayotgan hilol"
+    }
+  },
+  "notFound": {
+    "title": "Bu sahifa soyada.",
+    "body": "Manzil mavjud emas yoki koʼchirilgan.",
+    "back": "Boshiga qaytish"
+  }
+}
