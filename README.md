@@ -15,7 +15,7 @@ Node 22 or later and pnpm 11 are expected.
 
 ## Stack
 
-Next.js 16 (App Router, Cache Components, Turbopack), Tailwind CSS v4, `motion`, `next-intl`, `@phosphor-icons/react`. Light and dark themes are a `dark` class on `<html>` managed by `src/components/theme/` (no theme library). Fonts come from Google Fonts through `next/font`: Spectral for display, Geist for text, Geist Mono for labels. All three are loaded with the Cyrillic subset.
+Next.js 16 (App Router, Turbopack), Tailwind CSS v4, `motion`, `next-intl`, `@phosphor-icons/react`. Light and dark themes are a `dark` class on `<html>` managed by `src/components/theme/` (no theme library). Fonts come from Google Fonts through `next/font`: Spectral for display, Geist for text, Geist Mono for labels. All three are loaded with the Cyrillic subset.
 
 ## Where things live
 
@@ -37,3 +37,7 @@ Team members, portraits, publications and the stats row are invented stand-ins. 
 ## Uzbek apostrophes
 
 Uzbek Latin text uses U+02BC (ʼ) for oʼ and gʼ throughout. Geist does not ship the official U+02BB glyph, and a font fallback on that one character looked worse than the substitution. Keep new Uzbek copy consistent with this.
+
+## Deploy
+
+Cloudflare Workers through OpenNext, one Worker for the whole site. `pnpm run preview` serves the Worker build locally, `pnpm run deploy` publishes it. Setup steps, domain and continuous deploys are in `docs/DEPLOY.md`.

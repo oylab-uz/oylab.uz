@@ -74,7 +74,7 @@ All faces must cover Latin, Latin Extended and Cyrillic, because Russian text si
 - `@phosphor-icons/react`, one weight across the site.
 - Surface and Night themes via a `dark` class on `<html>`: a parser-inserted bootstrap script applies the stored choice before paint, a layout effect re-applies it when the locale layout remounts, and the toggle flips the class and `localStorage` (`src/components/theme/`). No theme library.
 - `next/font/google` for Geist, Geist Mono and the serif.
-- Static site, no database. Deploy target: Vercel, after the build is approved.
+- No database yet. Deploy target: Cloudflare Workers through OpenNext, pages rendered per request (changed from Vercel on 2026-11-04; see `docs/DEPLOY.md`).
 
 Note: `create-next-app` refuses a directory that contains `.serena/`, so scaffolding happens in a temporary folder and is moved in.
 
@@ -88,7 +88,7 @@ Note: `create-next-app` refuses a directory that contains `.serena/`, so scaffol
 ## 10. Build notes (what differs from the proposal)
 
 - **Uzbek apostrophe.** Geist and Geist Mono do not carry U+02BB (ʻ). All Uzbek copy uses U+02BC (ʼ), which all three faces ship, so no glyph falls back to a system font. Spectral has both.
-- **Live moon under Cache Components.** Next.js 16 refuses `new Date()` during prerender, so tonight's phase comes from a `"use cache"` function with `cacheLife("hours")` in `src/lib/moon-tonight.ts`. Header mark, hero, process section and footer all read from it.
+- **Live moon per request.** Tonight's phase comes from `getMoonTonight()` in `src/lib/moon-tonight.ts`, which waits for the request with `connection()` so the clock is never read at build time. Header mark, hero, process section and footer all read from it. (It was a `"use cache"` function under Cache Components until 2026-11-04; Cache Components are off because they do not work on Cloudflare Workers.)
 - **Locale detection is off.** `/` always serves English, whatever the browser language (changed from Uzbek on 2026-11-04 at the user's request). Visitors switch with the EN · UZ · RU control and the choice is kept in a cookie. Set `localeDetection: true` in `src/i18n/routing.ts` to redirect first visits by `Accept-Language` instead.
 - **Process section on phones.** Instead of the desktop sticky column, phones get a slim sticky bar under the header with a 64px moon and the current phase label, so the moon still turns while the four steps scroll past.
 - **Placeholder portraits** come from `i.pravatar.cc` (grayscale applied in CSS) rather than random landscape photos. Swap for real portraits in `public/` and remove the remote pattern in `next.config.ts`. The small "placeholder" tag renders in production too, on purpose, until an entry's `placeholder` flag is removed.

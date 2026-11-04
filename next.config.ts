@@ -4,8 +4,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
   turbopack: {
     rules: {
       "*.css": {
@@ -15,10 +13,9 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    remotePatterns: [
-      // Placeholder portraits until the real team photos land in /public.
-      { protocol: "https", hostname: "i.pravatar.cc" },
-    ],
+    // The Worker ships no image optimizer. Placeholder portraits are served
+    // as-is; real photos should go through Cloudflare Images (docs/DEPLOY.md).
+    unoptimized: true,
   },
 };
 

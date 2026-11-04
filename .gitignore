@@ -42,3 +42,8 @@ next-env.d.ts
 
 # serena (local code-intelligence config)
 .serena/
+
+# cloudflare (OpenNext build output, wrangler state, generated binding types)
+.open-next/
+.wrangler/
+cloudflare-env.d.ts

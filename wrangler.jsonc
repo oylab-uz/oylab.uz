@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "oylab",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true,
+  // Custom domains require the oylab.uz zone to be active on the account that
+  // deploys. For a first test deploy to the workers.dev URL, remove "routes".
+  // admin.oylab.uz will be a second entry here, served by this same Worker.
+  "routes": [{ "pattern": "oylab.uz", "custom_domain": true }]
+}
