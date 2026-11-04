@@ -144,7 +144,20 @@
     "eyebrow": "Publications",
     "title": "Recent work.",
     "viewAll": "All publications",
-    "read": "Read"
+    "read": "Read",
+    "lead": "Papers, preprints and releases from the lab, newest first.",
+    "empty": "Nothing published yet.",
+    "pdf": "PDF",
+    "arxiv": "arXiv",
+    "code": "Code",
+    "doi": "DOI",
+    "bibtex": "BibTeX",
+    "copy": "Copy BibTeX",
+    "copied": "Copied",
+    "abstract": "Abstract",
+    "metaTitle": "Publications",
+    "back": "All publications",
+    "fallbackNotice": "This record is available in {language} only for now."
   },
   "join": {
     "eyebrow": "Join",

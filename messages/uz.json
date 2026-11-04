@@ -144,7 +144,20 @@
     "eyebrow": "Nashrlar",
     "title": "Soʼnggi ishlar.",
     "viewAll": "Barcha nashrlar",
-    "read": "Oʼqish"
+    "read": "Oʼqish",
+    "lead": "Laboratoriyaning maqolalari, preprintlari va relizlari, eng yangisi birinchi.",
+    "empty": "Hali hech narsa eʼlon qilinmagan.",
+    "pdf": "PDF",
+    "arxiv": "arXiv",
+    "code": "Kod",
+    "doi": "DOI",
+    "bibtex": "BibTeX",
+    "copy": "BibTeX nusxalash",
+    "copied": "Nusxalandi",
+    "abstract": "Annotatsiya",
+    "metaTitle": "Nashrlar",
+    "back": "Barcha nashrlar",
+    "fallbackNotice": "Bu yozuv hozircha faqat {language} tilida mavjud."
   },
   "join": {
     "eyebrow": "Qoʼshilish",
