@@ -50,3 +50,9 @@ cloudflare-env.d.ts
 
 # git worktrees for feature branches
 .worktrees/
+
+# graphify local state (graph.json, graph.html, GRAPH_REPORT.md and resolve_imports.py are committed)
+/graphify-out/cache/
+/graphify-out/manifest.json
+/graphify-out/cost.json
+/graphify-out/.graphify_*
