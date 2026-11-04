@@ -56,3 +56,8 @@ cloudflare-env.d.ts
 /graphify-out/manifest.json
 /graphify-out/cost.json
 /graphify-out/.graphify_*
+
+# scratch: plan workspaces, probe scripts, local wrangler logs
+.superpowers/
+.wrangler/
+.wrangler-dev.log

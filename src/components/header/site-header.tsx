@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { cn, container } from "@/lib/cn";
-import { MoonDisc } from "@/components/moon/moon-disc";
+import { HeaderMark } from "@/components/moon/header-mark";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -18,7 +18,7 @@ const links = [
   { href: "#contact", key: "contact" },
 ] as const;
 
-export function SiteHeader({ phase }: { phase: number }) {
+export function SiteHeader() {
   const t = useTranslations("nav");
   const a11y = useTranslations("a11y");
   const [open, setOpen] = useState(false);
@@ -41,7 +41,7 @@ export function SiteHeader({ phase }: { phase: number }) {
           onClick={() => setOpen(false)}
         >
           {/* Sized to Spectral's cap height so the disc reads as the O in OY. */}
-          <MoonDisc phase={phase} size={15} className="shrink-0 translate-y-px" />
+          <HeaderMark size={15} className="shrink-0 translate-y-px" />
           <span className="font-serif text-[22px] leading-none tracking-tight">
             Y Lab
           </span>

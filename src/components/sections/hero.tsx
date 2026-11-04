@@ -1,17 +1,14 @@
 import { getTranslations } from "next-intl/server";
-import { MoonDisc } from "@/components/moon/moon-disc";
+import { HeroMoon } from "@/components/sections/hero-moon";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { PlaceholderTag } from "@/components/ui/placeholder-tag";
 import { cn, container } from "@/lib/cn";
 import { stats } from "@/lib/content";
-import type { MoonTonight } from "@/lib/moon-tonight";
 
-export async function Hero({ moon }: { moon: MoonTonight }) {
+export async function Hero() {
   const t = await getTranslations("hero");
   const tStats = await getTranslations("stats");
-  const tMoon = await getTranslations("moon.phases");
   const a11y = await getTranslations("a11y");
-  const phaseLabel = tMoon(moon.name);
 
   return (
     <section className="relative">
@@ -46,19 +43,7 @@ export async function Hero({ moon }: { moon: MoonTonight }) {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-6 lg:col-span-5 lg:items-end">
-          <div className="w-[min(72vw,440px)] motion-safe:animate-float">
-            <MoonDisc
-              phase={moon.phase}
-              size={440}
-              className="h-auto w-full"
-              title={a11y("moonAlt", { phase: phaseLabel, percent: moon.percent })}
-            />
-          </div>
-          <p className="eyebrow tabular">
-            {t("tonight")} · {phaseLabel} · {moon.percent}%
-          </p>
-        </div>
+        <HeroMoon />
       </div>
 
       <div className="border-t border-line">

@@ -1,8 +1,8 @@
 import { moonPath } from "@/lib/moon";
 
 type MoonDiscProps = {
-  /** 0 new, 0.5 full. */
-  phase: number;
+  /** 0 new, 0.5 full. Null draws the neutral (full) disc in the same box. */
+  phase: number | null;
   size?: number;
   className?: string;
   /** When given, the SVG is exposed to assistive tech with this label. */
@@ -28,7 +28,7 @@ export function MoonDisc({ phase, size = 320, className, title }: MoonDiscProps)
     >
       {title ? <title>{title}</title> : null}
       <circle r={MOON_RADIUS} fill="var(--color-moon-shadow)" />
-      <path d={moonPath(phase, MOON_RADIUS)} fill="var(--color-moon)" />
+      <path d={moonPath(phase ?? 0.5, MOON_RADIUS)} fill="var(--color-moon)" />
       <circle
         r={MOON_RADIUS}
         fill="none"

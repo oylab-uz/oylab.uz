@@ -1,3 +1,13 @@
-# Served by Workers Static Assets. Hashed build output never changes.
+# Short browser cache with revalidation, plus baseline security headers, on everything.
+/*
+  Cache-Control: public, max-age=60, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Hashed build output never changes: detach the short rule above, then cache forever.
 /_next/static/*
-  Cache-Control: public,max-age=31536000,immutable
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable

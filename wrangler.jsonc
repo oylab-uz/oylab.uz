@@ -1,25 +1,21 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "oylab",
-  "main": ".open-next/worker.js",
+  // Assets-only Worker: no "main", so page views never run Worker code and
+  // never count as invocations. Phase 2 adds "main" plus run_worker_first
+  // for /api/* only.
   "compatibility_date": "2026-11-01",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "directory": "out",
+    // /uz -> out/uz.html or out/uz/index.html, no trailing slash in URLs.
+    "html_handling": "auto-trailing-slash",
+    // Serves the nearest 404.html up the path: out/uz/404.html for /uz/*.
+    "not_found_handling": "404-page"
   },
-  "observability": {
-    "enabled": true
-  },
-  "upload_source_maps": true,
-  // The site must only be reachable on its own hostnames. The workers.dev
-  // hostname would duplicate content now and bypass Cloudflare Access on the
-  // admin host later. Flip workers_dev to true for a one-off test before the
-  // zone is active, together with removing "routes".
+  // The site must only be reachable on its own hostname. The workers.dev
+  // hostname would duplicate content. Flip workers_dev to true for a one-off
+  // test before the zone is active, together with removing "routes".
   "workers_dev": false,
   "preview_urls": false,
-  // Custom domains require the oylab.uz zone to be active on the account that
-  // deploys. For a first test deploy to the workers.dev URL, remove "routes".
-  // admin.oylab.uz will be a second entry here, served by this same Worker.
   "routes": [{ "pattern": "oylab.uz", "custom_domain": true }]
 }
