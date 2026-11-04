@@ -21,5 +21,27 @@
   // Custom domains require the oylab.uz zone to be active on the account that
   // deploys. For a first test deploy to the workers.dev URL, remove "routes".
   // admin.oylab.uz will be a second entry here, served by this same Worker.
-  "routes": [{ "pattern": "oylab.uz", "custom_domain": true }]
+  "routes": [
+    { "pattern": "oylab.uz", "custom_domain": true },
+    { "pattern": "admin.oylab.uz", "custom_domain": true }
+  ],
+  // D1 lives in one region; smart placement runs the Worker near it.
+  "placement": { "mode": "smart" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "oylab",
+      // Replace with the id printed by `pnpm wrangler d1 create oylab`.
+      "database_id": "REPLACE_AFTER_wrangler_d1_create",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "oylab-media" }],
+  "vars": {
+    // Zero Trust team domain, e.g. "oylab.cloudflareaccess.com", and the
+    // Access application's audience tag. Empty until the Access app exists.
+    "CF_ACCESS_TEAM_DOMAIN": "",
+    "CF_ACCESS_AUD": "",
+    "MEDIA_PUBLIC_URL": "https://media.oylab.uz"
+  }
 }

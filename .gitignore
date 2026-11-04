@@ -50,3 +50,9 @@ cloudflare-env.d.ts
 
 # git worktrees for feature branches
 .worktrees/
+
+# superpowers plan workspaces (scratch)
+.superpowers/
+
+# local wrangler vars
+.dev.vars

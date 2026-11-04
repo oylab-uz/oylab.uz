@@ -5,3 +5,4 @@ allowBuilds:
   "@swc/core": false
   workerd: true
   esbuild: false
+  better-sqlite3: true
