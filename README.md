@@ -57,8 +57,8 @@ admin's Media page.
 | `src/proxy.ts` | host split, Access token check, locale routing |
 | `scripts/seed-content.ts`, `seeds/seed.sql` | development seed |
 
-Local workflow: `pnpm db:migrate:local`, `pnpm db:seed`, `pnpm dev`,
-`pnpm test`. Restart `pnpm dev` after editing `messages/*.json`.
+Local workflow after cloning: `pnpm install`, `pnpm cf-typegen` (generates the
+binding types), `pnpm db:migrate:local`, `pnpm db:seed`, `pnpm dev`, `pnpm test`. Restart `pnpm dev` after editing `messages/*.json`.
 
 ## Deploy
 

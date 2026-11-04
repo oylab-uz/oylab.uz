@@ -44,7 +44,7 @@ parts, or the request hangs (opennextjs-cloudflare issues 1115, 1225, 1349,
 
 5. Continuous deploys: Workers & Pages, `oylab`, Settings, Builds, connect the
    GitHub repository `oylab-uz/oylab.uz`. Build command
-   `pnpm exec opennextjs-cloudflare build`, deploy command
+   `pnpm cf-typegen && pnpm exec opennextjs-cloudflare build`, deploy command
    `pnpm exec opennextjs-cloudflare deploy`, production branch `main`. Every
    push to `main` then deploys; other branches get preview URLs.
 
@@ -156,6 +156,14 @@ After the content platform the Worker uploads at about 11.3 MiB raw,
 The Workers Free plan allows 3 MiB gzip. The next features (HR,
 site customization) will not fit in the remaining margin; switch the
 account to Workers Paid (10 MiB gzip) before adding them.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs lint, the unit tests and `next build` on
+every pull request and on pushes to `main` and `feat/**`. Deploys stay on
+Workers Builds. The job runs `pnpm cf-typegen` first because
+`cloudflare-env.d.ts` is generated, not committed; do the same after
+cloning.
 
 ## Versions
 
