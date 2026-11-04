@@ -4,6 +4,8 @@ RUN npm install -g pnpm@11.1.2
 WORKDIR /repo
 
 FROM base AS deps
+# better-sqlite3 compiles its native module when no prebuilt binary matches.
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/admin/package.json apps/admin/
 COPY packages/content/package.json packages/content/
