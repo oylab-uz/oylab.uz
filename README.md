@@ -15,7 +15,7 @@ Node 22 or later and pnpm 11 are expected.
 
 ## Stack
 
-Next.js 16 (App Router, Cache Components, Turbopack), Tailwind CSS v4, `motion`, `next-intl`, `next-themes`, `@phosphor-icons/react`. Fonts come from Google Fonts through `next/font`: Spectral for display, Geist for text, Geist Mono for labels. All three are loaded with the Cyrillic subset.
+Next.js 16 (App Router, Cache Components, Turbopack), Tailwind CSS v4, `motion`, `next-intl`, `@phosphor-icons/react`. Light and dark themes are a `dark` class on `<html>` managed by `src/components/theme/` (no theme library). Fonts come from Google Fonts through `next/font`: Spectral for display, Geist for text, Geist Mono for labels. All three are loaded with the Cyrillic subset.
 
 ## Where things live
 

@@ -72,7 +72,7 @@ All faces must cover Latin, Latin Extended and Cyrillic, because Russian text si
 - `motion` (the current Framer Motion package, imported from `motion/react`).
 - `next-intl` for routing and messages.
 - `@phosphor-icons/react`, one weight across the site.
-- `next-themes` for the Surface and Night themes.
+- Surface and Night themes via a `dark` class on `<html>`: a parser-inserted bootstrap script applies the stored choice before paint, a layout effect re-applies it when the locale layout remounts, and the toggle flips the class and `localStorage` (`src/components/theme/`). No theme library.
 - `next/font/google` for Geist, Geist Mono and the serif.
 - Static site, no database. Deploy target: Vercel, after the build is approved.
 
