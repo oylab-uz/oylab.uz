@@ -184,5 +184,29 @@
     "title": "This page is in shadow.",
     "body": "The address does not exist or has moved.",
     "back": "Back to the start"
+  },
+  "journal": {
+    "eyebrow": "Journal",
+    "title": "Notes from the lab.",
+    "lead": "Research notes, announcements and the occasional recipe, written by the people doing the work.",
+    "empty": "Nothing published yet.",
+    "readingTime": "{minutes} min read",
+    "fallbackNotice": "This post is available in {language} only for now.",
+    "alsoIn": "Also in",
+    "page": "Page {page} of {pages}",
+    "older": "Older",
+    "newer": "Newer",
+    "back": "All posts",
+    "metaTitle": "Journal"
+  },
+  "locales": {
+    "en": "English",
+    "uz": "Uzbek",
+    "ru": "Russian"
+  },
+  "errors": {
+    "title": "Something went dark.",
+    "lead": "The page could not be rendered. Try again in a moment.",
+    "retry": "Try again"
   }
 }

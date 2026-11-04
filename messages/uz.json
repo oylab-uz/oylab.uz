@@ -184,5 +184,29 @@
     "title": "Bu sahifa soyada.",
     "body": "Manzil mavjud emas yoki koʼchirilgan.",
     "back": "Boshiga qaytish"
+  },
+  "journal": {
+    "eyebrow": "Jurnal",
+    "title": "Laboratoriyadan yozuvlar.",
+    "lead": "Tadqiqot yozuvlari, eʼlonlar va vaqti-vaqti bilan retseptlar, ishni qilayotgan odamlar qalamidan.",
+    "empty": "Hali hech narsa eʼlon qilinmagan.",
+    "readingTime": "{minutes} daqiqa oʼqish",
+    "fallbackNotice": "Bu maqola hozircha faqat {language} tilida mavjud.",
+    "alsoIn": "Boshqa tillarda",
+    "page": "{page} / {pages}-sahifa",
+    "older": "Eskiroq",
+    "newer": "Yangiroq",
+    "back": "Barcha maqolalar",
+    "metaTitle": "Jurnal"
+  },
+  "locales": {
+    "en": "ingliz",
+    "uz": "oʼzbek",
+    "ru": "rus"
+  },
+  "errors": {
+    "title": "Nimadir qorongʼilashdi.",
+    "lead": "Sahifani koʼrsatib boʼlmadi. Birozdan soʼng qayta urinib koʼring.",
+    "retry": "Qayta urinish"
   }
 }
