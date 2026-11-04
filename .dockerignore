@@ -10,5 +10,7 @@ out
 .wrangler
 **/data
 docs
+# the site is not built in the image, but bun needs every workspace manifest for the lockfile
 apps/site
+!apps/site/package.json
 *.log
