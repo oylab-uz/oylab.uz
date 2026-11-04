@@ -10,7 +10,11 @@ export function r2Store(config: NonNullable<ReturnType<typeof env.r2>>): MediaSt
   const url = (key: string) => `https://${config.accountId}.r2.cloudflarestorage.com/${config.bucket}/${key}`;
   return {
     async put(key, bytes, contentType, cacheControl) {
-      const res = await client.fetch(url(key), { method: "PUT", body: bytes, headers: { "content-type": contentType, "cache-control": cacheControl } });
+      // Sign, then send the original bytes rather than the signed Request: a Request's
+      // body is a stream, which Node's fetch sends chunked, and R2 answers 411
+      // MissingContentLength. With a string or ArrayBuffer body fetch sets the length.
+      const signed = await client.sign(url(key), { method: "PUT", body: bytes, headers: { "content-type": contentType, "cache-control": cacheControl } });
+      const res = await fetch(signed.url, { method: "PUT", headers: signed.headers, body: bytes });
       if (!res.ok) throw new Error(`R2 put ${key}: ${res.status} ${await res.text()}`);
     },
     async delete(key) {
