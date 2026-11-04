@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/header/site-header";
 import { Providers } from "@/components/providers";
 import { SiteFooter } from "@/components/site-footer";
+import { ThemeInit } from "@/components/theme/theme-init";
 import { routing, type Locale } from "@/i18n/routing";
 import { site } from "@/lib/content";
 import { getMoonTonight } from "@/lib/moon-tonight";
@@ -89,9 +90,11 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${geist.variable} ${geistMono.variable} ${spectral.variable}`}
     >
       <body className="flex min-h-dvh flex-col">
+        <ThemeInit />
         <Providers>
           <NextIntlClientProvider>
             <a

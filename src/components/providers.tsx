@@ -1,18 +1,14 @@
 "use client";
 
 import { MotionConfig } from "motion/react";
-import { ThemeProvider } from "next-themes";
-import type { ReactNode } from "react";
+import { useLayoutEffect, type ReactNode } from "react";
+import { applyStoredTheme } from "@/components/theme/theme";
 
 export function Providers({ children }: { children: ReactNode }) {
-  return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="light"
-      enableSystem={false}
-      disableTransitionOnChange
-    >
-      <MotionConfig reducedMotion="user">{children}</MotionConfig>
-    </ThemeProvider>
-  );
+  // Runs on every mount of the locale layout, before paint. See theme.ts.
+  useLayoutEffect(() => {
+    applyStoredTheme();
+  }, []);
+
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }
