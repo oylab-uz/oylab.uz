@@ -1,8 +1,9 @@
 import { setRequestLocale } from "next-intl/server";
 import { HomePage } from "@/components/home-page";
+import type { Locale } from "@/i18n/routing";
 
 export default async function LocaleHome({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <HomePage />;
+  return <HomePage locale={locale as Locale} />;
 }

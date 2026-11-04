@@ -98,49 +98,6 @@ export const team: ReadonlyArray<{
 ];
 
 /** Paper titles stay in English across locales, as they would on arXiv. */
-export const publications: ReadonlyArray<{
-  year: string;
-  title: string;
-  venue: string;
-  href: string;
-  placeholder: boolean;
-}> = [
-  {
-    year: "2025",
-    title: "Oydin: A 7B Open Language Model for Uzbek and Karakalpak",
-    venue: "arXiv preprint",
-    href: "#",
-    placeholder: true,
-  },
-  {
-    year: "2025",
-    title: "Low-Resource Tokenization for Turkic Morphology",
-    venue: "Findings of ACL",
-    href: "#",
-    placeholder: true,
-  },
-  {
-    year: "2025",
-    title: "Mixed-Precision Spectral Solvers on Commodity GPUs",
-    venue: "SC Workshops",
-    href: "#",
-    placeholder: true,
-  },
-  {
-    year: "2024",
-    title: "Satellite-Guided Irrigation Forecasting for the Fergana Valley",
-    venue: "NeurIPS, Climate Change AI Workshop",
-    href: "#",
-    placeholder: true,
-  },
-  {
-    year: "2024",
-    title: "Benchmarking Uzbek Speech Recognition in Noisy Field Conditions",
-    venue: "Interspeech",
-    href: "#",
-    placeholder: true,
-  },
-];
 
 /**
  * Marquee terms are deliberately trilingual on every locale:

@@ -21,7 +21,8 @@
     "team": "Jamoa",
     "publications": "Nashrlar",
     "contact": "Aloqa",
-    "join": "Jamoaga qoʼshiling"
+    "join": "Jamoaga qoʼshiling",
+    "journal": "Jurnal"
   },
   "hero": {
     "eyebrow": "Ilgʼor tadqiqot laboratoriyasi · Toshkent",
@@ -144,7 +145,21 @@
     "eyebrow": "Nashrlar",
     "title": "Soʼnggi ishlar.",
     "viewAll": "Barcha nashrlar",
-    "read": "Oʼqish"
+    "read": "Oʼqish",
+    "lead": "Laboratoriyaning maqolalari, preprintlari va relizlari, eng yangisi birinchi.",
+    "empty": "Hali hech narsa eʼlon qilinmagan.",
+    "pdf": "PDF",
+    "arxiv": "arXiv",
+    "code": "Kod",
+    "doi": "DOI",
+    "bibtex": "BibTeX",
+    "copy": "BibTeX nusxalash",
+    "copied": "Nusxalandi",
+    "abstract": "Annotatsiya",
+    "metaTitle": "Nashrlar",
+    "back": "Barcha nashrlar",
+    "fallbackNotice": "Bu yozuv hozircha faqat {language} tilida mavjud.",
+    "emptyLanding": "Nashrlar eʼlon qilingach shu yerda paydo boʼladi."
   },
   "join": {
     "eyebrow": "Qoʼshilish",
@@ -184,5 +199,28 @@
     "title": "Bu sahifa soyada.",
     "body": "Manzil mavjud emas yoki koʼchirilgan.",
     "back": "Boshiga qaytish"
+  },
+  "journal": {
+    "eyebrow": "Jurnal",
+    "title": "Laboratoriyadan yozuvlar.",
+    "lead": "Tadqiqot yozuvlari, eʼlonlar va vaqti-vaqti bilan retseptlar, ishni qilayotgan odamlar qalamidan.",
+    "empty": "Hali hech narsa eʼlon qilinmagan.",
+    "readingTime": "{minutes} daqiqa oʼqish",
+    "fallbackNotice": "Bu maqola hozircha faqat {language} tilida mavjud.",
+    "alsoIn": "Boshqa tillarda",
+    "back": "Barcha maqolalar",
+    "metaTitle": "Jurnal",
+    "teaserEyebrow": "Jurnaldan",
+    "all": "Barcha maqolalar"
+  },
+  "locales": {
+    "en": "ingliz",
+    "uz": "oʼzbek",
+    "ru": "rus"
+  },
+  "errors": {
+    "title": "Nimadir qorongʼilashdi.",
+    "lead": "Sahifani koʼrsatib boʼlmadi. Birozdan soʼng qayta urinib koʼring.",
+    "retry": "Qayta urinish"
   }
 }

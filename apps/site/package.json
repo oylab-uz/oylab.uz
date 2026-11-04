@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "preview": "pnpm build && wrangler dev",
-    "deploy": "pnpm build && wrangler deploy"
+    "deploy": "pnpm build && wrangler deploy",
+    "predev": "node scripts/fetch-snapshot.mjs"
   },
   "dependencies": {
     "@oylab/content": "workspace:*",
@@ -18,7 +19,8 @@
     "next": "16.4.5",
     "next-intl": "^4.14.9",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "katex": "0.19.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

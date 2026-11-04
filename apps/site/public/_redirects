@@ -1,3 +1,11 @@
 # English is unprefixed. Old or guessed /en links go to the real path.
 /en / 301
 /en/* /:splat 301
+
+# Placeholder detail pages emitted when the content snapshot is empty.
+/journal/_ /journal 301
+/publications/_ /publications 301
+/uz/journal/_ /uz/journal 301
+/uz/publications/_ /uz/publications 301
+/ru/journal/_ /ru/journal 301
+/ru/publications/_ /ru/publications 301

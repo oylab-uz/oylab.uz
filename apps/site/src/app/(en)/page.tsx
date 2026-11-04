@@ -3,5 +3,5 @@ import { HomePage } from "@/components/home-page";
 
 export default function EnglishHome() {
   setRequestLocale("en");
-  return <HomePage />;
+  return <HomePage locale="en" />;
 }

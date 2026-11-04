@@ -4,24 +4,31 @@ import { List, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { cn, container } from "@/lib/cn";
 import { HeaderMark } from "@/components/moon/header-mark";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
 
+/** Hash links point at landing sections and work from any page; the rest are routes. */
 const links = [
-  { href: "#research", key: "research" },
-  { href: "#process", key: "process" },
-  { href: "#team", key: "team" },
-  { href: "#publications", key: "publications" },
-  { href: "#contact", key: "contact" },
+  { href: "/#research", key: "research", route: false },
+  { href: "/#process", key: "process", route: false },
+  { href: "/#team", key: "team", route: false },
+  { href: "/journal", key: "journal", route: true },
+  { href: "/publications", key: "publications", route: true },
+  { href: "/#contact", key: "contact", route: false },
 ] as const;
+
+function isActive(pathname: string, link: (typeof links)[number]) {
+  return link.route && (pathname === link.href || pathname.startsWith(`${link.href}/`));
+}
 
 export function SiteHeader() {
   const t = useTranslations("nav");
   const a11y = useTranslations("a11y");
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!open) return;
@@ -52,15 +59,22 @@ export function SiteHeader() {
           aria-label={a11y("mainNavigation")}
           className="hidden items-center gap-7 md:flex"
         >
-          {links.map((link) => (
-            <a
-              key={link.key}
-              href={link.href}
-              className="text-sm text-muted transition-colors hover:text-ink"
-            >
-              {t(link.key)}
-            </a>
-          ))}
+          {links.map((link) => {
+            const active = isActive(pathname, link);
+            return (
+              <Link
+                key={link.key}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "text-sm transition-colors hover:text-ink",
+                  active ? "text-ink underline decoration-line-strong underline-offset-8" : "text-muted",
+                )}
+              >
+                {t(link.key)}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-1">
@@ -102,10 +116,8 @@ export function SiteHeader() {
               className={cn(container, "flex flex-1 flex-col justify-center gap-2")}
             >
               {links.map((link) => (
-                <motion.a
+                <motion.div
                   key={link.key}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
                   variants={{
                     hidden: { opacity: 0, y: 16 },
                     show: {
@@ -114,10 +126,16 @@ export function SiteHeader() {
                       transition: { type: "spring", stiffness: 120, damping: 18 },
                     },
                   }}
-                  className="border-b border-line py-5 font-serif text-3xl tracking-tight text-ink-strong"
                 >
-                  {t(link.key)}
-                </motion.a>
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    aria-current={isActive(pathname, link) ? "page" : undefined}
+                    className="block border-b border-line py-5 font-serif text-3xl tracking-tight text-ink-strong"
+                  >
+                    {t(link.key)}
+                  </Link>
+                </motion.div>
               ))}
             </motion.nav>
             <div className={cn(container, "flex items-center justify-between py-6")}>

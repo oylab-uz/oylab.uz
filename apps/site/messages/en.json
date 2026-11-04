@@ -21,7 +21,8 @@
     "team": "Team",
     "publications": "Publications",
     "contact": "Contact",
-    "join": "Join the lab"
+    "join": "Join the lab",
+    "journal": "Journal"
   },
   "hero": {
     "eyebrow": "Frontier research lab · Tashkent",
@@ -144,7 +145,21 @@
     "eyebrow": "Publications",
     "title": "Recent work.",
     "viewAll": "All publications",
-    "read": "Read"
+    "read": "Read",
+    "lead": "Papers, preprints and releases from the lab, newest first.",
+    "empty": "Nothing published yet.",
+    "pdf": "PDF",
+    "arxiv": "arXiv",
+    "code": "Code",
+    "doi": "DOI",
+    "bibtex": "BibTeX",
+    "copy": "Copy BibTeX",
+    "copied": "Copied",
+    "abstract": "Abstract",
+    "metaTitle": "Publications",
+    "back": "All publications",
+    "fallbackNotice": "This record is available in {language} only for now.",
+    "emptyLanding": "Publications will appear here as they are released."
   },
   "join": {
     "eyebrow": "Join",
@@ -184,5 +199,28 @@
     "title": "This page is in shadow.",
     "body": "The address does not exist or has moved.",
     "back": "Back to the start"
+  },
+  "journal": {
+    "eyebrow": "Journal",
+    "title": "Notes from the lab.",
+    "lead": "Research notes, announcements and the occasional recipe, written by the people doing the work.",
+    "empty": "Nothing published yet.",
+    "readingTime": "{minutes} min read",
+    "fallbackNotice": "This post is available in {language} only for now.",
+    "alsoIn": "Also in",
+    "back": "All posts",
+    "metaTitle": "Journal",
+    "teaserEyebrow": "From the journal",
+    "all": "All posts"
+  },
+  "locales": {
+    "en": "English",
+    "uz": "Uzbek",
+    "ru": "Russian"
+  },
+  "errors": {
+    "title": "Something went dark.",
+    "lead": "The page could not be rendered. Try again in a moment.",
+    "retry": "Try again"
   }
 }
