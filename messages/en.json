@@ -21,7 +21,8 @@
     "team": "Team",
     "publications": "Publications",
     "contact": "Contact",
-    "join": "Join the lab"
+    "join": "Join the lab",
+    "journal": "Journal"
   },
   "hero": {
     "eyebrow": "Frontier research lab · Tashkent",
@@ -157,7 +158,8 @@
     "abstract": "Abstract",
     "metaTitle": "Publications",
     "back": "All publications",
-    "fallbackNotice": "This record is available in {language} only for now."
+    "fallbackNotice": "This record is available in {language} only for now.",
+    "emptyLanding": "Publications will appear here as they are released."
   },
   "join": {
     "eyebrow": "Join",
@@ -210,7 +212,9 @@
     "older": "Older",
     "newer": "Newer",
     "back": "All posts",
-    "metaTitle": "Journal"
+    "metaTitle": "Journal",
+    "teaserEyebrow": "From the journal",
+    "all": "All posts"
   },
   "locales": {
     "en": "English",

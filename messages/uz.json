@@ -21,7 +21,8 @@
     "team": "Jamoa",
     "publications": "Nashrlar",
     "contact": "Aloqa",
-    "join": "Jamoaga qoʼshiling"
+    "join": "Jamoaga qoʼshiling",
+    "journal": "Jurnal"
   },
   "hero": {
     "eyebrow": "Ilgʼor tadqiqot laboratoriyasi · Toshkent",
@@ -157,7 +158,8 @@
     "abstract": "Annotatsiya",
     "metaTitle": "Nashrlar",
     "back": "Barcha nashrlar",
-    "fallbackNotice": "Bu yozuv hozircha faqat {language} tilida mavjud."
+    "fallbackNotice": "Bu yozuv hozircha faqat {language} tilida mavjud.",
+    "emptyLanding": "Nashrlar eʼlon qilingach shu yerda paydo boʼladi."
   },
   "join": {
     "eyebrow": "Qoʼshilish",
@@ -210,7 +212,9 @@
     "older": "Eskiroq",
     "newer": "Yangiroq",
     "back": "Barcha maqolalar",
-    "metaTitle": "Jurnal"
+    "metaTitle": "Jurnal",
+    "teaserEyebrow": "Jurnaldan",
+    "all": "Barcha maqolalar"
   },
   "locales": {
     "en": "ingliz",

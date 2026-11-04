@@ -31,6 +31,9 @@ export async function Team() {
                     src={member.photo}
                     alt={member.name}
                     fill
+                    // Placeholder portraits come from a third-party host the
+                    // zone cannot transform; real photos drop this flag.
+                    unoptimized={member.placeholder}
                     sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
                     className="object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
                   />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { FallbackNotice } from "@/components/content/fallback-notice";
 import { LocaleLinks } from "@/components/content/locale-links";
@@ -76,8 +77,15 @@ export default async function PostPage({ params }: Props) {
         ) : null}
 
         {post.coverUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={post.coverUrl} alt={post.coverAlt ?? ""} className="mt-10 w-full rounded-xl border border-line" />
+          <Image
+            src={post.coverUrl}
+            alt={post.coverAlt ?? ""}
+            width={1200}
+            height={800}
+            sizes="(min-width: 1024px) 68ch, 100vw"
+            priority
+            className="mt-10 h-auto w-full rounded-xl border border-line"
+          />
         ) : null}
 
         <div className="prose-moon mt-10" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />

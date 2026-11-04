@@ -21,9 +21,10 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    // The Worker ships no image optimizer. Placeholder portraits are served
-    // as-is; real photos should go through Cloudflare Images (docs/DEPLOY.md).
-    unoptimized: true,
+    // Cloudflare Image Transformations on the zone resize and convert on the
+    // fly; the Worker itself has no optimizer. See src/lib/image-loader.ts.
+    loader: "custom",
+    loaderFile: "./src/lib/image-loader.ts",
   },
 };
 
