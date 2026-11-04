@@ -30,3 +30,7 @@ coverage/
 .serena/
 .worktrees/
 .superpowers/
+
+# old OpenNext build output, user notes
+.open-next/
+docs/prompts/

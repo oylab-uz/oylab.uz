@@ -1,6 +1,6 @@
 // Copies better-sqlite3 (with its compiled or prebuilt binary) into the standalone output,
 // plus the helper packages it depends on. Run from apps/admin after `next build`.
-// pnpm's strict layout means each package resolves only from its dependant.
+// Each helper is resolved from its dependant so any node_modules layout works.
 const fs = require("node:fs");
 const path = require("node:path");
 

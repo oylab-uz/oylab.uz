@@ -68,7 +68,7 @@ All faces must cover Latin, Latin Extended and Cyrillic, because Russian text si
 
 ## 8. Stack
 
-- Next.js 16 (App Router, TypeScript, Turbopack), Tailwind CSS v4, pnpm.
+- Next.js 16 (App Router, TypeScript, Turbopack), Tailwind CSS v4, bun.
 - `motion` (the current Framer Motion package, imported from `motion/react`).
 - `next-intl` for routing and messages.
 - `@phosphor-icons/react`, one weight across the site.
