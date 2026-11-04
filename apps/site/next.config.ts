@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   // Every page is a prebuilt file served by Workers Static Assets.
   output: "export",
+  transpilePackages: ["@oylab/content"],
   trailingSlash: false,
   experimental: {
     // One 404 page for the whole app; needed because the English root and the

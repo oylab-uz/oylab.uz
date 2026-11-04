@@ -1,3 +1,7 @@
+packages:
+  - apps/*
+  - packages/*
+
 allowBuilds:
   sharp: false
   unrs-resolver: false
@@ -5,3 +9,4 @@ allowBuilds:
   "@swc/core": false
   workerd: true
   esbuild: false
+  better-sqlite3: true

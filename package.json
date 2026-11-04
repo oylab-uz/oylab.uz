@@ -2,33 +2,16 @@
   "name": "oylab",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.1.2",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "preview": "next build && wrangler dev",
-    "deploy": "next build && wrangler deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
-  },
-  "dependencies": {
-    "@phosphor-icons/react": "^2.1.10",
-    "motion": "^14.9.0",
-    "next": "16.4.5",
-    "next-intl": "^4.14.9",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.5",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "4.157.0"
-  },
-  "packageManager": "pnpm@11.1.2"
+    "dev": "pnpm --filter site dev",
+    "dev:admin": "pnpm --filter admin dev",
+    "build": "pnpm --filter site build",
+    "build:admin": "pnpm --filter admin build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "preview": "pnpm --filter site preview",
+    "deploy": "pnpm --filter site deploy"
+  }
 }
