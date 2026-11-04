@@ -38,6 +38,28 @@ Team members, portraits, publications and the stats row are invented stand-ins. 
 
 Uzbek Latin text uses U+02BC (ʼ) for oʼ and gʼ throughout. Geist does not ship the official U+02BB glyph, and a font fallback on that one character looked worse than the substitution. Keep new Uzbek copy consistent with this.
 
+## Content: journal, publications, admin
+
+Posts and publication records live in Cloudflare D1 and are edited at
+`admin.oylab.uz` (Cloudflare Access in front; in development
+`http://admin.localhost:3000` with no login). Each item has one primary
+language and optional translations; a missing translation falls back to the
+primary text with a notice. Bodies are Markdown with math and code, rendered
+to HTML when saved (`src/lib/markdown.ts`). Images upload to R2 from the
+admin's Media page.
+
+| Where | What |
+| --- | --- |
+| `src/db/schema.ts`, `drizzle/` | tables and migrations (Drizzle, D1) |
+| `src/lib/content/` | typed queries, translation fallback |
+| `src/app/admin/` | the admin (second root layout) |
+| `src/app/[locale]/journal`, `.../publications` | public pages |
+| `src/proxy.ts` | host split, Access token check, locale routing |
+| `scripts/seed-content.ts`, `seeds/seed.sql` | development seed |
+
+Local workflow: `pnpm db:migrate:local`, `pnpm db:seed`, `pnpm dev`,
+`pnpm test`. Restart `pnpm dev` after editing `messages/*.json`.
+
 ## Deploy
 
 Cloudflare Workers through OpenNext, one Worker for the whole site. `pnpm run preview` serves the Worker build locally, `pnpm run deploy` publishes it. Setup steps, domain and continuous deploys are in `docs/DEPLOY.md`.

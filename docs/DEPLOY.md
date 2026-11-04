@@ -80,6 +80,83 @@ portraits are placeholders today. When real photos arrive, upload them to
 Cloudflare Images and switch `next.config.ts` to the Cloudflare Images loader
 described at https://opennext.js.org/cloudflare/howtos/image.
 
+## Content platform (journal, publications, admin)
+
+The same Worker serves `admin.oylab.uz` (editor, behind Cloudflare Access)
+and reads content from D1; images live in a public R2 bucket on
+`media.oylab.uz`. Account steps, in order, after the landing site is live:
+
+1. Create the database and apply the schema:
+
+   ```
+   pnpm wrangler d1 create oylab
+   ```
+
+   Paste the printed `database_id` into `wrangler.jsonc` under
+   `d1_databases`, then run `pnpm db:migrate:remote`.
+
+2. Create the media bucket and give it a public hostname:
+
+   ```
+   pnpm wrangler r2 bucket create oylab-media
+   ```
+
+   In the dashboard: R2, `oylab-media`, Settings, Custom Domains, add
+   `media.oylab.uz`. `MEDIA_PUBLIC_URL` in `wrangler.jsonc` already points
+   there.
+
+3. Protect the admin. Zero Trust, Access, Applications, add a self-hosted
+   application "OY Lab Admin" for `admin.oylab.uz`. Login method: one-time
+   PIN by email to start (no identity provider setup); add Google later if
+   wanted. Policy: Allow, with the lab's email addresses. Copy the team
+   domain (`<team>.cloudflareaccess.com`) and the application's Audience
+   tag into `CF_ACCESS_TEAM_DOMAIN` and `CF_ACCESS_AUD` in `wrangler.jsonc`.
+   Until both are set, the Worker answers 401 on the admin host for
+   everyone, by design.
+
+4. Enable image resizing for the zone: Images, Transformations, enable for
+   `oylab.uz`. `next/image` requests go through `/cdn-cgi/image/...` on the
+   zone (see `src/lib/image-loader.ts`).
+
+5. `pnpm run deploy` (or push to `main` once Workers Builds is connected).
+   Then open `https://admin.oylab.uz`, sign in, and publish the first post.
+
+### Local development
+
+```
+pnpm db:migrate:local      # apply migrations to the local D1 (.wrangler/state)
+pnpm db:seed               # two sample posts and five draft publications
+pnpm dev                   # public site on http://localhost:3000
+                           # admin on http://admin.localhost:3000 (no login in development)
+pnpm test                  # unit tests (vitest, in-memory SQLite)
+```
+
+Uploads made in development are served from `/dev-media/...`; production
+serves them from `media.oylab.uz`. After editing `messages/*.json`, restart
+`pnpm dev`: next-intl loads the catalogs once per server start.
+
+### Previewing the admin host in workerd
+
+`wrangler dev` rewrites every request's Host to the first route in
+`wrangler.jsonc` (`oylab.uz`), so the admin branch of `src/proxy.ts` is
+unreachable in a plain preview. To preview it:
+
+```
+pnpm exec opennextjs-cloudflare build
+pnpm exec opennextjs-cloudflare preview -- --host admin.oylab.uz
+```
+
+Without an Access token every request answers 401, which is the expected
+production behaviour outside Cloudflare Access.
+
+### Bundle size
+
+After the content platform the Worker uploads at about 11.3 MiB raw,
+2.47 MiB gzip (`pnpm exec wrangler deploy --dry-run --outdir /tmp/oylab-dry`).
+The Workers Free plan allows 3 MiB gzip. The next features (HR,
+site customization) will not fit in the remaining margin; switch the
+account to Workers Paid (10 MiB gzip) before adding them.
+
 ## Versions
 
 Pinned in `package.json`: `next` 16.4.5 (the adapter's minimum for the 16
