@@ -5,7 +5,8 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # No includeSubDomains: mail.oylab.uz and webmail.oylab.uz live elsewhere without a certificate for their names.
+  Strict-Transport-Security: max-age=31536000
 
 # Hashed build output never changes: detach the short rule above, then cache forever.
 /_next/static/*
