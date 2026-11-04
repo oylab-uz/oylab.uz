@@ -21,6 +21,7 @@
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "drizzle-orm": "0.45.4",
+    "image-size": "2.0.4",
     "jose": "6.2.15",
     "katex": "0.19.1",
     "motion": "^14.9.0",

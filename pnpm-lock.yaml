@@ -14,6 +14,9 @@ importers:
       drizzle-orm:
         specifier: 0.45.4
         version: 0.45.4(@cloudflare/workers-types@5.20261104.1)(@types/better-sqlite3@9.6.0)(better-sqlite3@13.0.3)
+      image-size:
+        specifier: 2.0.4
+        version: 2.0.4
       jose:
         specifier: 6.2.15
         version: 6.2.15
@@ -3143,6 +3146,11 @@ packages:
   ignore@7.0.14:
     resolution: {integrity: sha512-wCBiZ77u1tuWde6G/nfOtLaCTYcFDU5yCzARzK10y+rLhzYoL7a7yEemcopcc2Mzow7gZOIjnV2ym1NYmdiJOQ==}
     engines: {node: '>= 4'}
+
+  image-size@2.0.4:
+    resolution: {integrity: sha512-QRUkFFsRV/6fuESxb9Vkq+a0LkSrgKXuc2NEqfikiXxxN/G3tjWt5EVUlMaImRBZRZK/jRBEbYvpPYZL8t08Zw==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -7869,6 +7877,8 @@ snapshots:
   ignore@5.3.2: {}
 
   ignore@7.0.14: {}
+
+  image-size@2.0.4: {}
 
   import-fresh@3.3.1:
     dependencies:
