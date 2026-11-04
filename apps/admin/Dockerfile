@@ -22,7 +22,6 @@ WORKDIR /app
 # The standalone output mirrors the workspace layout: apps/admin/server.js plus node_modules.
 COPY --from=build /repo/apps/admin/.next/standalone ./
 COPY --from=build /repo/apps/admin/.next/static ./apps/admin/.next/static
-COPY --from=build /repo/apps/admin/public ./apps/admin/public
 COPY --from=build /repo/apps/admin/drizzle ./apps/admin/drizzle
 RUN mkdir -p /data && chown -R node:node /data /app
 USER node
