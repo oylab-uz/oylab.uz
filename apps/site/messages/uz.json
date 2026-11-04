@@ -115,29 +115,9 @@
     "title": "Ish ortidagi insonlar.",
     "lead": "Toshkentda joylashgan tadqiqotchilar va muhandislar, Markaziy Osiyo va undan tashqaridagi hamkorlar bilan.",
     "members": {
-      "rahimova": {
-        "role": "Tadqiqot direktori",
-        "focus": "Asosiy modellar"
-      },
-      "toshmatov": {
-        "role": "Tizimlar rahbari",
-        "focus": "Samarali oʼrgatish va inferens"
-      },
-      "yusupova": {
-        "role": "Ilmiy xodim",
-        "focus": "Ilmiy hisoblash"
-      },
-      "karimov": {
-        "role": "Mashinaviy oʼrganish muhandisi",
-        "focus": "Maʼlumotlar va baholash"
-      },
-      "saidova": {
-        "role": "Ilmiy xodim",
-        "focus": "Turkiy tillarni qayta ishlash"
-      },
-      "abdullayev": {
-        "role": "Tadqiqot muhandisi",
-        "focus": "Amaliy tizimlar"
+      "noonosh": {
+        "role": "Asoschi",
+        "focus": "Tadqiqot yoʼnalishi"
       }
     }
   },

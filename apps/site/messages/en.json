@@ -115,29 +115,9 @@
     "title": "The people behind the work.",
     "lead": "Researchers and engineers based in Tashkent, with collaborators across Central Asia and beyond.",
     "members": {
-      "rahimova": {
-        "role": "Director of research",
-        "focus": "Foundation models"
-      },
-      "toshmatov": {
-        "role": "Systems lead",
-        "focus": "Efficient training and inference"
-      },
-      "yusupova": {
-        "role": "Research scientist",
-        "focus": "Scientific computing"
-      },
-      "karimov": {
-        "role": "Machine learning engineer",
-        "focus": "Data and evaluation"
-      },
-      "saidova": {
-        "role": "Research scientist",
-        "focus": "Turkic language processing"
-      },
-      "abdullayev": {
-        "role": "Research engineer",
-        "focus": "Applied systems"
+      "noonosh": {
+        "role": "Founder",
+        "focus": "Research direction"
       }
     }
   },

@@ -45,13 +45,7 @@ export const researchAreas: ReadonlyArray<{
   { id: "applied", index: "04", span: "md:col-span-2" },
 ];
 
-export type TeamMemberId =
-  | "rahimova"
-  | "toshmatov"
-  | "yusupova"
-  | "karimov"
-  | "saidova"
-  | "abdullayev";
+export type TeamMemberId = "noonosh";
 
 export const team: ReadonlyArray<{
   id: TeamMemberId;
@@ -60,40 +54,10 @@ export const team: ReadonlyArray<{
   placeholder: boolean;
 }> = [
   {
-    id: "rahimova",
-    name: "Dilnoza Rahimova",
-    photo: "https://i.pravatar.cc/800?img=47",
-    placeholder: true,
-  },
-  {
-    id: "toshmatov",
-    name: "Jasur Toshmatov",
-    photo: "https://i.pravatar.cc/800?img=12",
-    placeholder: true,
-  },
-  {
-    id: "yusupova",
-    name: "Madina Yusupova",
-    photo: "https://i.pravatar.cc/800?img=32",
-    placeholder: true,
-  },
-  {
-    id: "karimov",
-    name: "Bekzod Karimov",
-    photo: "https://i.pravatar.cc/800?img=60",
-    placeholder: true,
-  },
-  {
-    id: "saidova",
-    name: "Nilufar Saidova",
-    photo: "https://i.pravatar.cc/800?img=26",
-    placeholder: true,
-  },
-  {
-    id: "abdullayev",
-    name: "Sardor Abdullayev",
-    photo: "https://i.pravatar.cc/800?img=68",
-    placeholder: true,
+    id: "noonosh",
+    name: "Noonosh Is",
+    photo: "https://media.oylab.uz/2026/11/5647d292-ef60-4566-b515-efa61d6b4c01.jpg",
+    placeholder: false,
   },
 ];
 
