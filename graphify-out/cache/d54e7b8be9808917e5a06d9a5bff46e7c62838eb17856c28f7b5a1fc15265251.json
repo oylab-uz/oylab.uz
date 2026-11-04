@@ -1,0 +1,1 @@
+{"nodes": [], "edges": [{"source": "src_components_ui_magnetic_button_tsx", "target": "client_component", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "src/components/ui/magnetic-button.tsx", "source_location": "L1", "weight": 1.0}], "hyperedges": []}

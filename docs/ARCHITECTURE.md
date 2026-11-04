@@ -109,7 +109,7 @@ sequenceDiagram
   A->>B: POST deploy hook (secret URL)
   B-->>A: build id (or "already queued")
   A->>A: record in site_publishes, show result
-  B->>B: pnpm --filter site build: fetch snapshot, next export
+  B->>B: bun run build: fetch snapshot, next export
   B->>W: wrangler deploy out/
   Note over W: Live one to three minutes after the click
 ```
@@ -121,13 +121,13 @@ push picks it up.
 ## Local development
 
 ```
-pnpm install
-pnpm dev            # site on http://localhost:3000, empty or last fetched snapshot
-pnpm dev:admin      # admin on http://localhost:3300, SQLite in apps/admin/data
-pnpm --filter admin seed
-pnpm test           # content package + admin unit tests
+bun install
+bun run dev            # site on http://localhost:3000, empty or last fetched snapshot
+bun run dev:admin      # admin on http://localhost:3300, SQLite in apps/admin/data
+bun run --filter admin seed
+bun run test        # content package + admin unit tests
 ```
 
 To see admin content on the local site: publish in the admin (writes
 `apps/admin/data/uploads/snapshot/content.json`), then
-`SNAPSHOT_URL=file://$PWD/apps/admin/data/uploads/snapshot/content.json pnpm build`.
+`SNAPSHOT_URL=file://$PWD/apps/admin/data/uploads/snapshot/content.json bun run build`.

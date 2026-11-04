@@ -1,0 +1,1 @@
+{"nodes": [], "edges": [{"source": "page_catchallpage", "target": "not_found_notfound", "relation": "calls", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "src/app/[locale]/[...rest]/page.tsx", "source_location": "L3-L5", "weight": 1.0}], "hyperedges": []}

@@ -2,17 +2,25 @@
   "name": "oylab",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@11.1.2",
+  "packageManager": "bun@1.3.14",
   "scripts": {
-    "dev": "pnpm --filter site dev",
-    "dev:admin": "pnpm --filter admin dev",
-    "build": "pnpm --filter site build",
-    "build:admin": "pnpm --filter admin build",
-    "lint": "pnpm -r lint",
-    "test": "pnpm -r test",
-    "typecheck": "pnpm -r typecheck",
-    "preview": "pnpm --filter site run preview",
-    "deploy": "pnpm --filter site run deploy",
-    "wrangler": "pnpm --filter site exec wrangler"
-  }
+    "dev": "bun run --filter site dev",
+    "dev:admin": "bun run --filter admin dev",
+    "build": "bun run --filter site build",
+    "build:admin": "bun run --filter admin build",
+    "lint": "bun run --filter '*' lint",
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun run --filter '*' test",
+    "preview": "bun run --filter site preview",
+    "deploy": "bun run --filter site deploy",
+    "wrangler": "bun run --cwd apps/site wrangler"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "trustedDependencies": [
+    "better-sqlite3",
+    "workerd"
+  ]
 }

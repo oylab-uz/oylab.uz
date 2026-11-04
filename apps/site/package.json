@@ -8,9 +8,10 @@
     "build": "next build",
     "lint": "eslint",
     "typecheck": "node scripts/fetch-snapshot.mjs && tsc --noEmit",
-    "preview": "pnpm build && wrangler dev",
-    "deploy": "pnpm build && wrangler deploy",
-    "predev": "node scripts/fetch-snapshot.mjs"
+    "preview": "bun run build && wrangler dev",
+    "deploy": "bun run build && wrangler deploy",
+    "predev": "node scripts/fetch-snapshot.mjs",
+    "wrangler": "wrangler"
   },
   "dependencies": {
     "@oylab/content": "workspace:*",

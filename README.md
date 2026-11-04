@@ -14,14 +14,14 @@ Visual design decisions: `docs/DESIGN.md`.
 ## Commands
 
 ```
-pnpm install
-pnpm dev                    # site, http://localhost:3000
-pnpm dev:admin              # admin, http://localhost:3300 (no login in development)
-pnpm --filter admin seed    # sample posts and draft publications
-pnpm lint && pnpm typecheck && pnpm test
-pnpm build                  # static site -> apps/site/out
-pnpm run preview            # serve the export with wrangler
-pnpm run deploy             # publish the site (needs: pnpm wrangler login)
+bun install
+bun run dev                    # site, http://localhost:3000
+bun run dev:admin              # admin, http://localhost:3300 (no login in development)
+bun run --filter admin seed    # sample posts and draft publications
+bun run lint && bun run typecheck && bun run test
+bun run build               # static site -> apps/site/out
+bun run preview             # serve the export with wrangler
+bun run deploy              # publish the site (needs: bun run wrangler login)
 ```
 
 ## Content rules

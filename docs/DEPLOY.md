@@ -10,26 +10,26 @@ Worker `oylab`, assets-only (`apps/site/wrangler.jsonc` has no `main`), custom d
 `oylab.uz`, `workers.dev` and preview URLs off.
 
 ```
-pnpm build        # next build -> apps/site/out  (fetches the snapshot first)
-pnpm run preview  # build, then wrangler dev on http://localhost:8787
-pnpm run deploy   # build, then wrangler deploy ("run" matters: pnpm has a built-in "deploy")
+bun run build     # next build -> apps/site/out  (fetches the snapshot first)
+bun run preview   # build, then wrangler dev on http://localhost:8787
+bun run deploy    # build, then wrangler deploy
 ```
 
-`pnpm wrangler deploy --dry-run` checks the configuration without
+`bun run wrangler deploy --dry-run` checks the configuration without
 uploading.
 
 One-time setup, in order:
 
 1. Zone `oylab.uz` active on the Cloudflare account (nameservers switched at the
    registrar; mail records imported first).
-2. `pnpm wrangler login` once on the deploying machine (the root `wrangler` script targets apps/site), then `pnpm run deploy`. Wrangler
+2. `bun run wrangler login` once on the deploying machine (the root `wrangler` script targets apps/site), then `bun run deploy`. Wrangler
    creates the Worker, the DNS record and the certificate for `oylab.uz`. Check `/`,
    `/uz`, `/ru`, `/en` (301), `/nope` (404).
 3. `www.oylab.uz`: proxied `AAAA` record `www` pointing at `100::`, Redirect Rule
    "Redirect from WWW to root", 301.
 4. Continuous builds: Workers & Pages, `oylab`, Settings, Builds, connect
-   `oylab-uz/oylab.uz`. Root directory `/`, build command `pnpm --filter site build`,
-   deploy command `pnpm --filter site exec wrangler deploy`, production branch `main`.
+   `oylab-uz/oylab.uz`. Root directory `/`, build command `bun run build`,
+   deploy command `cd apps/site && bunx wrangler deploy`, production branch `main`.
    The build needs no secrets: the snapshot is public.
 5. Deploy hook: Settings, Builds, Deploy Hooks, create one for `main`. Its URL is a
    secret; it goes into the admin's `.env` as `DEPLOY_HOOK_URL`.
@@ -38,7 +38,7 @@ After the first deploy, Worker metrics show no invocations for page views.
 
 ## Media: R2
 
-1. `pnpm wrangler r2 bucket create oylab-media`.
+1. `bun run wrangler r2 bucket create oylab-media`.
 2. R2, `oylab-media`, Settings, Custom Domains: add `media.oylab.uz`. Enable
    Transformations for the zone if resized images are wanted later.
 3. R2, Manage API tokens: a token with Object Read & Write on `oylab-media`. Its
@@ -105,4 +105,4 @@ served site has been verified locally and in the Workers runtime.
 ## Versions
 
 `next` 16.4.5, `wrangler` 4.157.0 (`compatibility_date` no later than 2026-11-03),
-`better-sqlite3` 13, Node 22 in the image. Pinned in the package files.
+`better-sqlite3` 13, bun 1.3 for installs and builds, Node 22 at runtime. Pinned in the package files.
