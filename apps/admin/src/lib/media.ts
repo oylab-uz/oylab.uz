@@ -14,6 +14,9 @@ const EXTENSION: Record<string, string> = {
   "application/pdf": "pdf",
 };
 const RASTER = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
+/** Images are stored as uploaded unless an edge exceeds this; the site serves them without an optimizer. */
+export const MAX_IMAGE_EDGE = 2000;
+const RESIZABLE = new Set(["image/png", "image/jpeg", "image/webp"]);
 
 export const ALLOWED_UPLOAD_TYPES = Object.keys(EXTENSION);
 
@@ -57,6 +60,7 @@ export async function putMedia(db: Db, store: MediaStore, input: PutMediaInput):
   const now = new Date();
   const key = mediaKey(id, input.contentType, now);
 
+  let bytes = input.bytes;
   let width: number | null = null;
   let height: number | null = null;
   if (RASTER.has(input.contentType)) {
@@ -68,15 +72,21 @@ export async function putMedia(db: Db, store: MediaStore, input: PutMediaInput):
       // Not a parsable raster image; dimensions stay unknown.
     }
   }
+  if (RESIZABLE.has(input.contentType) && width && height && Math.max(width, height) > MAX_IMAGE_EDGE) {
+    const fitted = await fitImage(input.bytes, input.contentType);
+    bytes = fitted.bytes;
+    width = fitted.width;
+    height = fitted.height;
+  }
 
-  await store.put(key, input.bytes, input.contentType, "public, max-age=31536000, immutable");
+  await store.put(key, bytes, input.contentType, "public, max-age=31536000, immutable");
 
   const row: Media = {
     id,
     key,
     url: `${input.publicUrl.replace(/\/+$/, "")}/${key}`,
     contentType: input.contentType,
-    bytes: input.bytes.byteLength,
+    bytes: bytes.byteLength,
     width,
     height,
     alt: input.alt,
@@ -85,6 +95,24 @@ export async function putMedia(db: Db, store: MediaStore, input: PutMediaInput):
   };
   await db.insert(media).values(row);
   return row;
+}
+
+/**
+ * Scale an oversized image so its longer edge is MAX_IMAGE_EDGE, keeping the format.
+ * EXIF orientation is applied (phone photos) and metadata dropped.
+ */
+async function fitImage(bytes: ArrayBuffer, contentType: string): Promise<{ bytes: ArrayBuffer; width: number; height: number }> {
+  // Resolved at runtime: sharp ships a native addon that the bundler must not trace.
+  // apps/admin/deploy/copy-native.cjs puts it into the standalone output.
+  const { default: sharp } = await import(/* turbopackIgnore: true */ "sharp");
+  let pipeline = sharp(Buffer.from(bytes))
+    .rotate()
+    .resize({ width: MAX_IMAGE_EDGE, height: MAX_IMAGE_EDGE, fit: "inside", withoutEnlargement: true });
+  if (contentType === "image/jpeg") pipeline = pipeline.jpeg({ quality: 84, mozjpeg: true });
+  else if (contentType === "image/webp") pipeline = pipeline.webp({ quality: 84 });
+  else pipeline = pipeline.png();
+  const { data, info } = await pipeline.toBuffer({ resolveWithObject: true });
+  return { bytes: data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer, width: info.width, height: info.height };
 }
 
 export async function deleteMedia(db: Db, store: MediaStore, id: string): Promise<void> {

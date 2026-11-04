@@ -33,7 +33,7 @@ flowchart LR
   V -->|"oylab.uz, /uz, /ru"| EDGE --> ASSETS
   V -->|"images"| EDGE --> R2
   STAFF["Lab staff"] -->|"admin.oylab.uz"| ACCESS --> CADDY --> ADMIN --> DB
-  ADMIN -->|"upload media,\nwrite snapshot"| R2
+  ADMIN -->|"upload media,\nwrite snapshot"| R2 Raster images (PNG, JPEG, WebP) wider or taller than 2000 px are scaled down with sharp before storage; the site serves images as stored.
   ADMIN -->|"POST deploy hook"| BUILDS
   REPO -->|"push to main"| BUILDS
   BUILDS -->|"fetch snapshot\nbefore next build"| R2
