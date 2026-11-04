@@ -28,7 +28,7 @@ Next.js 16 (App Router, Cache Components, Turbopack), Tailwind CSS v4, `motion`,
 | Page sections | `src/components/sections/` |
 | Moon phase math | `src/lib/moon.ts`, `src/lib/moon-tonight.ts` |
 
-Routes: `/` is always Uzbek, `/ru` and `/en` are prefixed. Browser-language detection is off (`localeDetection` in `src/i18n/routing.ts`); the proxy in `src/proxy.ts` only handles prefixes and the locale cookie.
+Routes: `/` is always English, `/uz` and `/ru` are prefixed. Browser-language detection is off (`localeDetection` in `src/i18n/routing.ts`); the proxy in `src/proxy.ts` only handles prefixes and the locale cookie.
 
 ## Placeholder content
 

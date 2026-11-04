@@ -82,14 +82,14 @@ Note: `create-next-app` refuses a directory that contains `.serena/`, so scaffol
 
 1. Default theme: Surface (light) recommended, or Night (dark), or follow system.
 2. Display face: serif plus Geist (recommended) or all-sans Geist.
-3. Default locale: `uz` recommended, or `en`, or `ru`.
+3. Default locale: `uz` was approved first; changed to `en` on 2026-11-04.
 4. Content: build with placeholders now and swap in real team, areas and publications later, or wait for real content first. Placeholders are realistic in shape but clearly marked (a `PLACEHOLDER` flag in the message files and a visible note in dev), never invented claims about the real lab. This matters most for the stats row and the publications list.
 
 ## 10. Build notes (what differs from the proposal)
 
 - **Uzbek apostrophe.** Geist and Geist Mono do not carry U+02BB (ʻ). All Uzbek copy uses U+02BC (ʼ), which all three faces ship, so no glyph falls back to a system font. Spectral has both.
 - **Live moon under Cache Components.** Next.js 16 refuses `new Date()` during prerender, so tonight's phase comes from a `"use cache"` function with `cacheLife("hours")` in `src/lib/moon-tonight.ts`. Header mark, hero, process section and footer all read from it.
-- **Locale detection is off.** `/` always serves Uzbek, whatever the browser language, because that is what "root serves uz" was taken to mean. Visitors switch with the UZ · RU · EN control and the choice is kept in a cookie. Set `localeDetection: true` in `src/i18n/routing.ts` to redirect first visits by `Accept-Language` instead.
+- **Locale detection is off.** `/` always serves English, whatever the browser language (changed from Uzbek on 2026-11-04 at the user's request). Visitors switch with the EN · UZ · RU control and the choice is kept in a cookie. Set `localeDetection: true` in `src/i18n/routing.ts` to redirect first visits by `Accept-Language` instead.
 - **Process section on phones.** Instead of the desktop sticky column, phones get a slim sticky bar under the header with a 64px moon and the current phase label, so the moon still turns while the four steps scroll past.
 - **Placeholder portraits** come from `i.pravatar.cc` (grayscale applied in CSS) rather than random landscape photos. Swap for real portraits in `public/` and remove the remote pattern in `next.config.ts`. The small "placeholder" tag renders in production too, on purpose, until an entry's `placeholder` flag is removed.
 - **Hero reveal is CSS only.** The hero text animates with a keyframe stagger instead of Motion, so it is readable before JavaScript loads. Sections below the fold still use the Motion reveal.
