@@ -19,7 +19,11 @@
     "db:build-seed": "tsx scripts/build-seed.ts"
   },
   "dependencies": {
+    "@codemirror/lang-markdown": "6.5.2",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
     "@phosphor-icons/react": "^2.1.10",
+    "codemirror": "6.0.2",
     "drizzle-orm": "0.45.4",
     "image-size": "2.0.4",
     "jose": "6.2.15",

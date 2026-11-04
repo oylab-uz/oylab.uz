@@ -3,7 +3,7 @@ import type { Db } from "@/db";
 import { media, posts, postTranslations, type Post, type PostTranslation } from "@/db/schema";
 import { routing, type Locale } from "@/i18n/routing";
 import { renderMarkdown } from "@/lib/markdown";
-import { isValidSlug } from "@/lib/slug";
+import { isValidSlug, SLUG_RULE } from "@/lib/slug";
 import { resolveTranslation } from "./resolve";
 import type {
   FieldErrors,
@@ -16,7 +16,6 @@ import type {
   Status,
 } from "./types";
 
-export const SLUG_RULE = "Use lowercase letters, numbers and single hyphens, up to 80 characters";
 const NOT_FOUND: SaveResult = { ok: false, fieldErrors: { id: "Post not found" } };
 
 export async function createDraftPost(

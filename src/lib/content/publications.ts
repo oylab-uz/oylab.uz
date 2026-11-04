@@ -8,8 +8,7 @@ import {
 } from "@/db/schema";
 import { routing, type Locale } from "@/i18n/routing";
 import { renderMarkdown } from "@/lib/markdown";
-import { isValidSlug } from "@/lib/slug";
-import { SLUG_RULE } from "./posts";
+import { isValidSlug, SLUG_RULE } from "@/lib/slug";
 import { resolveTranslation } from "./resolve";
 import type {
   Author,

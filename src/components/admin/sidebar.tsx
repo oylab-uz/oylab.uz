@@ -16,7 +16,7 @@ export function AdminSidebar({ email }: { email: string }) {
   return (
     <aside className="flex shrink-0 flex-col border-b border-line bg-surface/40 lg:min-h-dvh lg:w-60 lg:border-r lg:border-b-0">
       <Link href="/" className="flex h-16 items-center gap-2 px-5 text-ink-strong">
-        <MoonDisc phase={0.5} size={14} />
+        <MoonDisc phase={0.22} size={14} />
         <span className="text-sm font-medium tracking-tight">OY Lab admin</span>
       </Link>
       <nav aria-label="Admin" className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:px-3">

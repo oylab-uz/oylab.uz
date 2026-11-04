@@ -9,6 +9,8 @@ const CYRILLIC: Record<string, string> = {
 
 const MAX = 80;
 
+export const SLUG_RULE = "Use lowercase letters, numbers and single hyphens, up to 80 characters";
+
 /** URL slug from a title in Latin, Cyrillic or Uzbek Latin with apostrophes. */
 export function slugify(input: string): string {
   let s = input.toLowerCase();
