@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Spectral } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -8,30 +7,11 @@ import { SiteHeader } from "@/components/header/site-header";
 import { Providers } from "@/components/providers";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeInit } from "@/components/theme/theme-init";
+import { geist, geistMono, spectral } from "@/app/fonts";
 import { routing, type Locale } from "@/i18n/routing";
 import { site } from "@/lib/content";
 import { getMoonTonight } from "@/lib/moon-tonight";
 import "@/app/globals.css";
-
-const geist = Geist({
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  variable: "--font-geist",
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  variable: "--font-geist-mono",
-  display: "swap",
-});
-
-const spectral = Spectral({
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
-  variable: "--font-spectral",
-  display: "swap",
-});
 
 type Params = Promise<{ locale: string }>;
 

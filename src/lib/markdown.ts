@@ -1,6 +1,6 @@
 import type { Element, Parent, Root } from "hast";
 import rehypeKatex from "rehype-katex";
-import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
+import rehypeSanitize, { defaultSchema, type Options as SanitizeSchema } from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
@@ -25,7 +25,7 @@ export function readingMinutes(md: string): number {
  * Sanitize runs before KaTeX, as rehype-katex recommends: the math source
  * survives as `code.language-math`, KaTeX then emits its own trusted HTML.
  */
-const schema = {
+const schema: SanitizeSchema = {
   ...defaultSchema,
   attributes: {
     ...defaultSchema.attributes,
