@@ -53,8 +53,10 @@ Already in place on the box (`ssh server`, user `dev`):
 - Container `oylab-admin`, image built from `apps/admin/Dockerfile`, SQLite on the
   volume `oylab_admin_data` at `/data`, joined to `caddy_network`, health check on
   `/healthz`.
-- Caddy block in `~/apps/caddy/Caddyfile`:
-  `admin.oylab.uz { reverse_proxy oylab-admin:3000 }`.
+- Caddy block in `~/apps/caddy/Caddyfile` (see `apps/admin/deploy/Caddyfile.snippet`):
+  `admin.oylab.uz` with a Cloudflare Origin CA certificate and
+  `reverse_proxy oylab-admin:3000`. The key and certificate live in the Caddy data volume
+  at `/data/certs/` with copies in `~/apps/caddy/certs/` (key never leaves the box).
 
 Until `.env` has the Access values, every request answers 401 (fail closed); until it has
 the R2 values, uploads and snapshots go to the container's local folder.
@@ -68,15 +70,28 @@ See `apps/admin/.env.example`. Required for production: `CF_ACCESS_TEAM_DOMAIN`,
 
 ### Cloudflare side for the admin
 
-1. DNS: a **proxied** (orange cloud) `AAAA` record `admin` to the box's IPv6 (and an `A`
-   record to its IPv4 if the box has one). Access only works on proxied records. Caddy
-   obtains its certificate over HTTP-01 through the proxy; keep the zone's SSL mode on
-   "Full".
-2. Zero Trust, Access, Applications: self-hosted application "OY Lab Admin" for
-   `admin.oylab.uz`. Login method: one-time PIN by email to start (Google can be added
-   later). Policy: Allow, the lab's email addresses. Copy the team domain
-   (`<team>.cloudflareaccess.com`) and the application's Audience tag into `.env`.
-3. Fill the R2 values and the deploy hook URL, then on the box:
+1. DNS: **proxied** (orange cloud) `AAAA` and `A` records `admin` to the box. Access only
+   works on proxied records.
+2. Origin certificate. Let's Encrypt cannot issue for this host: its validation request
+   goes through the proxy and Access answers it with a login redirect. Use a Cloudflare
+   Origin CA certificate instead (free, 15 years, trusted by Cloudflare only, which is all
+   that ever reaches the box):
+   - On the box, generate the key and a CSR once (the key stays on the box):
+     `cd ~/apps/caddy/certs && openssl ecparam -name prime256v1 -genkey -noout -out admin.oylab.uz.key && openssl req -new -key admin.oylab.uz.key -subj "/CN=admin.oylab.uz" -addext "subjectAltName=DNS:admin.oylab.uz" -out admin.oylab.uz.csr`
+   - Dashboard, zone `oylab.uz`, SSL/TLS, Origin Server, Create Certificate, "Use my
+     private key and CSR", paste the CSR, hostname `admin.oylab.uz` only, 15 years. Save
+     the certificate as `~/apps/caddy/certs/admin.oylab.uz.pem`.
+   - Copy both files into the Caddy container (`docker cp … caddy:/data/certs/`), add the
+     `tls` line from `apps/admin/deploy/Caddyfile.snippet` and
+     `docker exec caddy caddy reload --config /etc/caddy/Caddyfile` (no downtime).
+   - Zone SSL/TLS mode: "Full (strict)". "Always Use HTTPS" on.
+   Done 2026-11-04; the certificate expires 2041-10-31.
+3. Zero Trust, Access, Applications: self-hosted application (type "Public DNS") "OY Lab
+   Admin" for `admin.oylab.uz`. Login method: one-time PIN by email to start (Google can
+   be added later). Policy: Allow, the lab's email addresses. Team domain
+   (`<team>.cloudflareaccess.com`) and the application's Audience tag go into `.env`.
+   The Audience tag is also visible as `kid=` in the Access login redirect URL.
+4. Fill the R2 values and the deploy hook URL, then on the box:
    `cd ~/apps/admin.oylab.uz && docker compose up -d`.
 
 ### Updating the admin
