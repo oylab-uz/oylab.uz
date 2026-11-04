@@ -49,8 +49,19 @@ parts, or the request hangs (opennextjs-cloudflare issues 1115, 1225, 1349,
    push to `main` then deploys; other branches get preview URLs.
 
 If the zone is not active yet and you want to see the Worker on its
-`workers.dev` URL first, remove the `routes` block from `wrangler.jsonc`
-temporarily.
+`workers.dev` URL first, set `"workers_dev": true` and remove the `routes`
+block in `wrangler.jsonc` temporarily, then put both back. The `workers.dev`
+hostname stays off in normal operation: it would duplicate the site and, once
+the admin exists, bypass Cloudflare Access, which protects hostnames, not the
+Worker.
+
+## Known warning: Node.js middleware
+
+`src/proxy.ts` (the next-intl locale router, later also the admin host router)
+runs as Next.js Node.js middleware. The OpenNext build prints
+`WARN Node.js middleware support is experimental in cloudflare`. Locale
+prefixes, the `/en` redirect to `/` and 404s were verified in the workerd
+preview on 2026-11-04. Re-check this after every adapter upgrade.
 
 ## Local preview in the Workers runtime
 

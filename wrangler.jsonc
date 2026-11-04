@@ -12,6 +12,12 @@
     "enabled": true
   },
   "upload_source_maps": true,
+  // The site must only be reachable on its own hostnames. The workers.dev
+  // hostname would duplicate content now and bypass Cloudflare Access on the
+  // admin host later. Flip workers_dev to true for a one-off test before the
+  // zone is active, together with removing "routes".
+  "workers_dev": false,
+  "preview_urls": false,
   // Custom domains require the oylab.uz zone to be active on the account that
   // deploys. For a first test deploy to the workers.dev URL, remove "routes".
   // admin.oylab.uz will be a second entry here, served by this same Worker.

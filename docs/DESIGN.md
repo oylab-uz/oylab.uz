@@ -40,7 +40,7 @@ All faces must cover Latin, Latin Extended and Cyrillic, because Russian text si
 - next-intl with locale-prefixed routes: `/uz`, `/ru`, `/en`, plus hreflang and localized metadata.
 - Locale switcher in the nav as three short labels (UZ, RU, EN).
 - All copy lives in message files. Draft copy is written in all three languages for review.
-- Default locale is an open decision (see section 9).
+- Default locale: English at `/` (decided 2026-11-04; see section 9).
 
 ## 6. Page structure (single page, anchored sections)
 
