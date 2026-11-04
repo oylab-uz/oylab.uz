@@ -7,7 +7,7 @@
     "prebuild": "node scripts/fetch-snapshot.mjs",
     "build": "next build",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "node scripts/fetch-snapshot.mjs && tsc --noEmit",
     "preview": "pnpm build && wrangler dev",
     "deploy": "pnpm build && wrangler deploy",
     "predev": "node scripts/fetch-snapshot.mjs"
