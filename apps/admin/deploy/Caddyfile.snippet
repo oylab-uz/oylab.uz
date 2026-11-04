@@ -1,0 +1,6 @@
+# Append to ~/apps/caddy/Caddyfile, then: docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+# DNS: a proxied (orange-cloud) AAAA/A record for admin.oylab.uz pointing at this box.
+# Cloudflare Access gates the hostname; the app verifies the Access token on every request too.
+admin.oylab.uz {
+    reverse_proxy oylab-admin:3000
+}

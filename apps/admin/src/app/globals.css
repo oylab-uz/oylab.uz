@@ -1,0 +1,335 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  OY Lab palette. Achromatic on purpose: every colour is OKLCH with zero
+  chroma. "Surface" is the lit lunar surface, "Night" is the sky behind it.
+*/
+:root {
+  --bg: oklch(96.5% 0 0);
+  --surface: oklch(93% 0 0);
+  --surface-strong: oklch(89% 0 0);
+  --line: oklch(86% 0 0);
+  --line-strong: oklch(74% 0 0);
+  --muted: oklch(48% 0 0);
+  --ink: oklch(16% 0 0);
+  --ink-strong: oklch(10% 0 0);
+  --moon: oklch(99% 0 0);
+  --moon-shadow: oklch(80% 0 0);
+  --grain-opacity: 0.045;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: oklch(13% 0 0);
+  --surface: oklch(17% 0 0);
+  --surface-strong: oklch(22% 0 0);
+  --line: oklch(26% 0 0);
+  --line-strong: oklch(38% 0 0);
+  --muted: oklch(68% 0 0);
+  --ink: oklch(94% 0 0);
+  --ink-strong: oklch(99% 0 0);
+  --moon: oklch(92% 0 0);
+  --moon-shadow: oklch(24% 0 0);
+  --grain-opacity: 0.07;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-muted: var(--muted);
+  --color-ink: var(--ink);
+  --color-ink-strong: var(--ink-strong);
+  --color-moon: var(--moon);
+  --color-moon-shadow: var(--moon-shadow);
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-spectral), ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-rise: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-marquee: marquee 48s linear infinite;
+  --animate-float: float 14s ease-in-out infinite;
+  --animate-breathe: breathe 3.2s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(0, -10px, 0) rotate(1.2deg);
+    }
+  }
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      transform: translate3d(-100%, 0, 0);
+    }
+    to {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a,
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Fixed lunar-dust layer. Never on a scrolling container. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.8 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 160px 160px;
+  }
+  .dark .grain {
+    mix-blend-mode: screen;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-muted;
+  }
+
+  .hairline {
+    @apply border-line;
+  }
+
+  .marquee-track {
+    animation: var(--animate-marquee);
+    will-change: transform;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Long-form article body rendered from Markdown (journal posts, abstracts). */
+  .prose-moon {
+    max-width: 68ch;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .prose-moon > * + * {
+    margin-top: 1.25em;
+  }
+  .prose-moon h2,
+  .prose-moon h3,
+  .prose-moon h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--ink-strong);
+  }
+  .prose-moon h2 {
+    font-size: 1.75rem;
+    margin-top: 2.25em;
+  }
+  .prose-moon h3 {
+    font-size: 1.35rem;
+    margin-top: 1.75em;
+  }
+  .prose-moon h4 {
+    font-size: 1.1rem;
+  }
+  .prose-moon a {
+    color: var(--ink-strong);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 0.2em;
+  }
+  .prose-moon a:hover {
+    text-decoration-color: var(--ink);
+  }
+  .prose-moon strong {
+    font-weight: 500;
+    color: var(--ink-strong);
+  }
+  .prose-moon ul,
+  .prose-moon ol {
+    padding-left: 1.4em;
+  }
+  .prose-moon ul {
+    list-style: disc;
+  }
+  .prose-moon ol {
+    list-style: decimal;
+  }
+  .prose-moon li + li {
+    margin-top: 0.4em;
+  }
+  .prose-moon blockquote {
+    border-left: 1px solid var(--line-strong);
+    padding-left: 1.25em;
+    color: var(--muted);
+  }
+  .prose-moon hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 2.5em 0;
+  }
+  .prose-moon img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line);
+  }
+  .prose-moon table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .prose-moon th,
+  .prose-moon td {
+    border-top: 1px solid var(--line);
+    padding: 0.6em 0.75em 0.6em 0;
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose-moon th {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 0;
+  }
+  .prose-moon tbody tr:last-child td {
+    border-bottom: 1px solid var(--line);
+  }
+  .prose-moon code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--surface);
+    border-radius: 0.3em;
+    padding: 0.1em 0.35em;
+  }
+  .prose-moon pre {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    padding: 1.1rem 1.25rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .prose-moon pre code {
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+  }
+  .prose-moon .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25em 0;
+    margin: 1.5em 0;
+  }
+  .prose-moon .footnotes {
+    margin-top: 3em;
+    padding-top: 1.5em;
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .prose-moon .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  .prose-moon sup a {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+  }
+}
