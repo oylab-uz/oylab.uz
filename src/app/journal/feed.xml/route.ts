@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { getDb } from "@/db";
 import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -9,6 +10,8 @@ const escape = (s: string) =>
 
 /** RSS 2.0 of the last 50 posts in their primary language. */
 export async function GET() {
+  // Rendered per request: the content lives in D1, which does not exist at build time.
+  await connection();
   const db = await getDb();
   const { items } = await listPublishedPosts(db, { locale: routing.defaultLocale, page: 1, perPage: 50 });
   const feedUrl = `${site.url}/journal/feed.xml`;

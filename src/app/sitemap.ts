@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { connection } from "next/server";
 import { getDb } from "@/db";
 import { getPathname } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
@@ -14,6 +15,8 @@ function entries(href: string, locales: readonly Locale[], extra: Partial<Metada
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Rendered per request: the content lives in D1, which does not exist at build time.
+  await connection();
   const db = await getDb();
   const all = routing.locales;
   const out: MetadataRoute.Sitemap = [
