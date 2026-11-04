@@ -58,7 +58,7 @@ export type ButtonVariant = "primary" | "ghost" | "danger";
 
 export function buttonClass(variant: ButtonVariant = "primary", className?: string) {
   return cn(
-    "inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-[background-color,transform] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50",
+    "inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full px-5 text-sm font-medium whitespace-nowrap transition-[background-color,transform] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50",
     variant === "primary" && "bg-ink text-bg hover:bg-ink-strong",
     variant === "ghost" && "border border-line text-ink hover:bg-surface",
     variant === "danger" && "border border-line text-ink hover:bg-surface hover:text-ink-strong",
@@ -76,7 +76,7 @@ export function Banner({ tone, children }: { tone: "error" | "success"; children
       role="status"
       aria-live="polite"
       className={cn(
-        "rounded-lg border px-4 py-3 text-sm",
+        "min-w-0 rounded-lg border px-4 py-3 text-sm [overflow-wrap:anywhere]",
         tone === "error" ? "border-line-strong bg-surface text-ink-strong" : "border-line bg-surface text-ink",
       )}
     >
@@ -110,7 +110,7 @@ export function StatusPill({ status, label }: { status: "draft" | "published"; l
 
 export function PageHeader({ title, action }: { title: string; action?: ReactNode }) {
   return (
-    <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+    <div className="mb-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
       <h1 className="text-2xl font-medium tracking-tight text-ink-strong">{title}</h1>
       {action}
     </div>

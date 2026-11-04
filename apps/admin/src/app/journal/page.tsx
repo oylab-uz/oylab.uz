@@ -35,7 +35,7 @@ export default async function JournalAdminPage({
             <label htmlFor="new-locale" className="sr-only">
               Primary language of the new post
             </label>
-            <Select id="new-locale" name="primaryLocale" defaultValue="en" className="w-28">
+            <Select id="new-locale" name="primaryLocale" defaultValue="en" className="w-24">
               {LOCALES.map((l) => (
                 <option key={l} value={l}>
                   {l.toUpperCase()}

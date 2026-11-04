@@ -39,7 +39,7 @@ export default async function SitePage() {
                 <td className="whitespace-nowrap text-muted">
                   {p.posts} posts · {p.publications} publications
                 </td>
-                <td className="text-muted">
+                <td className="min-w-[18rem] text-muted [overflow-wrap:anywhere]">
                   {p.message}
                   {p.buildId ? <div className="font-mono text-[11px]">build {p.buildId}</div> : null}
                 </td>

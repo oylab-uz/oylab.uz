@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignOut } from "@phosphor-icons/react";
 import { MoonDisc } from "@/components/moon/moon-disc";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { adminNav } from "@/lib/nav";
@@ -11,7 +12,7 @@ function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function AdminSidebar({ email }: { email: string }) {
+export function AdminSidebar({ email, canSignOut }: { email: string; canSignOut: boolean }) {
   const pathname = usePathname();
   return (
     <aside className="flex shrink-0 flex-col border-b border-line bg-surface/40 lg:min-h-dvh lg:w-60 lg:border-r lg:border-b-0">
@@ -38,9 +39,24 @@ export function AdminSidebar({ email }: { email: string }) {
           );
         })}
       </nav>
-      <div className="mt-auto hidden items-center justify-between px-5 py-4 lg:flex">
-        <p className="font-mono text-[11px] tracking-[0.06em] text-muted">{email}</p>
-        <ThemeToggle toLight="Switch to the light theme" toDark="Switch to the night theme" />
+      <div className="mt-auto hidden flex-col gap-1 border-t border-line px-3 py-3 lg:flex">
+        {canSignOut ? (
+          // Cloudflare Access handles this path on the admin host: it clears the session cookie
+          // and shows the login page. A plain anchor, so it is a full navigation.
+          <a
+            href="/cdn-cgi/access/logout"
+            className="flex min-h-11 items-center gap-2.5 rounded-full px-3.5 text-sm text-muted transition-colors hover:bg-surface hover:text-ink"
+          >
+            <SignOut size={18} weight="light" aria-hidden />
+            Sign out
+          </a>
+        ) : null}
+        <div className="flex min-w-0 items-center justify-between gap-2 pl-3.5">
+          <p className="min-w-0 truncate font-mono text-[11px] tracking-[0.06em] text-muted" title={email}>
+            {email}
+          </p>
+          <ThemeToggle toLight="Switch to the light theme" toDark="Switch to the night theme" />
+        </div>
       </div>
     </aside>
   );
