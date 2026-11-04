@@ -20,8 +20,8 @@ pnpm dev:admin              # admin, http://localhost:3300 (no login in developm
 pnpm --filter admin seed    # sample posts and draft publications
 pnpm lint && pnpm typecheck && pnpm test
 pnpm build                  # static site -> apps/site/out
-pnpm preview                # serve the export with wrangler
-pnpm deploy                 # publish the site (needs wrangler login)
+pnpm run preview            # serve the export with wrangler
+pnpm run deploy             # publish the site (needs: pnpm wrangler login)
 ```
 
 ## Content rules

@@ -11,18 +11,18 @@ Worker `oylab`, assets-only (`apps/site/wrangler.jsonc` has no `main`), custom d
 
 ```
 pnpm build        # next build -> apps/site/out  (fetches the snapshot first)
-pnpm preview      # build, then wrangler dev on http://localhost:8787
-pnpm deploy       # build, then wrangler deploy
+pnpm run preview  # build, then wrangler dev on http://localhost:8787
+pnpm run deploy   # build, then wrangler deploy ("run" matters: pnpm has a built-in "deploy")
 ```
 
-`pnpm --filter site exec wrangler deploy --dry-run` checks the configuration without
+`pnpm wrangler deploy --dry-run` checks the configuration without
 uploading.
 
 One-time setup, in order:
 
 1. Zone `oylab.uz` active on the Cloudflare account (nameservers switched at the
    registrar; mail records imported first).
-2. `pnpm wrangler login` once on the deploying machine, then `pnpm deploy`. Wrangler
+2. `pnpm wrangler login` once on the deploying machine (the root `wrangler` script targets apps/site), then `pnpm run deploy`. Wrangler
    creates the Worker, the DNS record and the certificate for `oylab.uz`. Check `/`,
    `/uz`, `/ru`, `/en` (301), `/nope` (404).
 3. `www.oylab.uz`: proxied `AAAA` record `www` pointing at `100::`, Redirect Rule

@@ -11,7 +11,8 @@
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
-    "preview": "pnpm --filter site preview",
-    "deploy": "pnpm --filter site deploy"
+    "preview": "pnpm --filter site run preview",
+    "deploy": "pnpm --filter site run deploy",
+    "wrangler": "pnpm --filter site exec wrangler"
   }
 }
