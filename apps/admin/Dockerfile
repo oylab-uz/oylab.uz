@@ -15,6 +15,17 @@ FROM deps AS build
 COPY packages/content packages/content
 COPY apps/admin apps/admin
 RUN pnpm --filter admin build
+# Output tracing drops better-sqlite3's compiled binary (loaded through "bindings" at runtime).
+# Copy the real package and its two helpers next to the standalone server.
+RUN cd apps/admin \
+ && src=$(node -p "require('path').dirname(require.resolve('better-sqlite3/package.json'))") \
+ && mkdir -p .next/standalone/apps/admin/node_modules \
+ && cp -rL "$src" .next/standalone/apps/admin/node_modules/better-sqlite3 \
+ && for dep in bindings file-uri-to-path; do \
+      d=$(node -p "require('path').dirname(require.resolve('$dep/package.json', { paths: ['$src'] }))"); \
+      cp -rL "$d" ".next/standalone/apps/admin/node_modules/$dep"; \
+    done \
+ && ls .next/standalone/apps/admin/node_modules/better-sqlite3/build/Release/better_sqlite3.node
 
 FROM node:22-bookworm-slim AS runtime
 ENV NODE_ENV=production PORT=3000 HOSTNAME=0.0.0.0 DATABASE_PATH=/data/oylab.sqlite
