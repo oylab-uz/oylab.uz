@@ -33,7 +33,7 @@ flowchart LR
   V -->|"oylab.uz, /uz, /ru"| EDGE --> ASSETS
   V -->|"images"| EDGE --> R2
   STAFF["Lab staff"] -->|"admin.oylab.uz"| ACCESS --> CADDY --> ADMIN --> DB
-  ADMIN -->|"upload media,\nwrite snapshot"| R2 Raster images (PNG, JPEG, WebP) wider or taller than 2000 px are scaled down with sharp before storage; the site serves images as stored.
+  ADMIN -->|"upload media,\nwrite snapshot"| R2
   ADMIN -->|"POST deploy hook"| BUILDS
   REPO -->|"push to main"| BUILDS
   BUILDS -->|"fetch snapshot\nbefore next build"| R2
@@ -83,6 +83,9 @@ is why it can be public and the build needs no secret.
   a valid `Cf-Access-Jwt-Assertion` (JWKS from the team domain, audience checked), and
   `getIdentity()` verifies it again to name the author. No request header is trusted. In
   development (`next dev`) the gate is open and the identity is `ADMIN_DEV_EMAIL`.
+- Media: objects go to R2 under `year/month/id.ext` with immutable caching. Raster images
+  (PNG, JPEG, WebP) wider or taller than 2000 px are scaled down with sharp before storage,
+  because the site serves images as stored (static export, no optimizer).
 - Data: SQLite at `DATABASE_PATH` (a Docker volume), migrated on first use from
   `drizzle/`. Tables: `posts`, `post_translations`, `publications`,
   `publication_translations`, `media`, `site_publishes`.
