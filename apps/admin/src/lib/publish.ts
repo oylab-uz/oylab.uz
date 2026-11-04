@@ -78,7 +78,7 @@ export async function publishSite(
   const counts = { posts: snapshot.posts.length, publications: snapshot.publications.length };
   let outcome: PublishOutcome;
   try {
-    await store.put(SNAPSHOT_KEY, JSON.stringify(snapshot), "application/json", "public, max-age=60, must-revalidate");
+    await store.put(SNAPSHOT_KEY, JSON.stringify(snapshot), "application/json", "no-store");
     const hookUrl = deps.hookUrl === undefined ? env.deployHookUrl() : deps.hookUrl;
     if (!hookUrl) {
       outcome = { status: "uploaded", buildId: null, message: "Snapshot uploaded. No deploy hook configured; the site rebuilds on the next push to main.", ...counts };

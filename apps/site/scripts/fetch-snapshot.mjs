@@ -10,7 +10,10 @@ const empty = { version: 1, generatedAt: 0, posts: [], publications: [] };
 
 async function load() {
   if (url.startsWith("file:")) return JSON.parse(readFileSync(fileURLToPath(url), "utf8"));
-  const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+  // A unique query string sidesteps any edge cache between the builder and the bucket,
+  // so a rebuild requested right after a publish never sees the previous snapshot.
+  const fresh = `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}`;
+  const res = await fetch(fresh, { signal: AbortSignal.timeout(15000), cache: "no-store" });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
   return res.json();
 }
