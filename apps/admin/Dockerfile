@@ -18,8 +18,7 @@ RUN pnpm --filter admin build
 # Output tracing drops better-sqlite3's compiled binary (loaded through "bindings" at runtime).
 # Copy the real package and its two helpers next to the standalone server.
 COPY apps/admin/deploy/copy-native.cjs /tmp/copy-native.cjs
-RUN cd apps/admin && node /tmp/copy-native.cjs \
- && ls .next/standalone/apps/admin/node_modules/better-sqlite3/build/Release/better_sqlite3.node
+RUN cd apps/admin && node /tmp/copy-native.cjs
 
 FROM node:22-bookworm-slim AS runtime
 ENV NODE_ENV=production PORT=3000 HOSTNAME=0.0.0.0 DATABASE_PATH=/data/oylab.sqlite
