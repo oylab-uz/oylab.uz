@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { postFormAction, renderPreviewAction } from "@/app/admin/journal/[id]/actions";
-import { initialPostFormState } from "@/lib/forms/post-state";
+import { initialFormState } from "@/lib/forms/form-state";
 import type { Post, PostTranslation } from "@/db/schema";
 import { routing, type Locale } from "@/i18n/routing";
 import { toLocalInput } from "@/lib/forms/dates";
@@ -23,7 +23,7 @@ export function PostForm({
   translations: PostTranslation[];
   media: MediaOption[];
 }) {
-  const [state, formAction] = useActionState(postFormAction, initialPostFormState);
+  const [state, formAction] = useActionState(postFormAction, initialFormState);
   const locales = [post.primaryLocale, ...routing.locales.filter((l) => l !== post.primaryLocale)] as Locale[];
   const [active, setActive] = useState<Locale>(post.primaryLocale);
   const [enabled, setEnabled] = useState<Record<Locale, boolean>>(() => {

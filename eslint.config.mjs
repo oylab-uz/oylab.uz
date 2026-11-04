@@ -8,6 +8,7 @@ const eslintConfig = defineConfig([
   // Override default ignores of eslint-config-next.
   globalIgnores([
     ".open-next/**",
+    ".superpowers/**",
     ".wrangler/**",
     "cloudflare-env.d.ts",
     // Default ignores of eslint-config-next:

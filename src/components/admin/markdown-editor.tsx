@@ -5,15 +5,16 @@ import { EditorState } from "@codemirror/state";
 import { EditorView, basicSetup } from "codemirror";
 import { useEffect, useRef } from "react";
 
-const theme = EditorView.theme({
+const themeFor = (minHeight: string) =>
+  EditorView.theme({
   "&": { backgroundColor: "var(--bg)", color: "var(--ink)", fontSize: "14px", borderRadius: "0.5rem" },
   "&.cm-focused": { outline: "none" },
-  ".cm-content": { fontFamily: "var(--font-geist-mono), ui-monospace, monospace", padding: "12px 0", minHeight: "24rem" },
+  ".cm-content": { fontFamily: "var(--font-geist-mono), ui-monospace, monospace", padding: "12px 0", minHeight },
   ".cm-gutters": { backgroundColor: "var(--surface)", color: "var(--muted)", border: "none" },
   ".cm-activeLine, .cm-activeLineGutter": { backgroundColor: "color-mix(in oklch, var(--surface) 70%, transparent)" },
   ".cm-selectionBackground, &.cm-focused .cm-selectionBackground": { backgroundColor: "var(--surface-strong)" },
   ".cm-cursor": { borderLeftColor: "var(--ink)" },
-});
+  });
 
 type Props = {
   name: string;
@@ -21,13 +22,15 @@ type Props = {
   defaultValue: string;
   disabled?: boolean;
   onChange?: (value: string) => void;
+  /** CSS length for the editing area, default 24rem. */
+  minHeight?: string;
 };
 
 /**
  * CodeMirror 6 Markdown editor that mirrors its document into a hidden
  * textarea, so the surrounding form submits it like any other field.
  */
-export function MarkdownEditor({ name, id, defaultValue, disabled, onChange }: Props) {
+export function MarkdownEditor({ name, id, defaultValue, disabled, onChange, minHeight = "24rem" }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const mirror = useRef<HTMLTextAreaElement>(null);
   const onChangeRef = useRef(onChange);
@@ -45,7 +48,7 @@ export function MarkdownEditor({ name, id, defaultValue, disabled, onChange }: P
           basicSetup,
           markdown(),
           EditorView.lineWrapping,
-          theme,
+          themeFor(minHeight),
           EditorView.updateListener.of((update) => {
             if (!update.docChanged) return;
             const value = update.state.doc.toString();
