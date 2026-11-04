@@ -300,8 +300,8 @@ Every write sets `updated_by` from `x-admin-email`. Publishing requires a
 non-empty title and body in the primary locale and a unique slug.
 
 Reserved for the next specs, so the shell does not change later: nav slots
-Roles, Applications, Site; the `(admin)` layout exposes a `nav` array in one
-file.
+Roles, Applications, Site; `src/app/admin/layout.tsx` reads its `nav` array
+from one file, `src/app/admin/nav.ts`.
 
 ## 13. Performance and bundle budget
 
