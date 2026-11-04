@@ -1,78 +1,108 @@
-# Deploying oylab.uz to Cloudflare Workers Static Assets
+# Deploying oylab.uz
 
-The public site is a static export (`next build` with `output: "export"`)
-served by one assets-only Worker named `oylab`. No Worker code runs for page
-views: static asset requests are free and unlimited, so the site stays on the
-Workers Free plan at any traffic. Worker code arrives in Phase 2 for the admin
-API only (`/api/*` through `run_worker_first`).
+Read `ARCHITECTURE.md` first. Two deployables: the static site on Cloudflare Workers, the
+admin container on the Hetzner box. Nothing here changes DNS; those steps are listed for
+the account owner.
 
-## Layout of the export
+## Public site: Cloudflare Workers Static Assets
 
-- `/` is English (`src/app/(en)`), `/uz` and `/ru` are prefixed
-  (`src/app/[locale]` with `generateStaticParams` limited to those two).
-  Both layouts render `src/components/site-shell.tsx`.
-- `public/_redirects` sends `/en` and `/en/*` to the unprefixed path with 301.
-- `out/404.html` (English, from `src/app/global-not-found.tsx`),
-  `out/uz/404.html` and `out/ru/404.html` (from `src/app/[locale]/404`) are
-  served by `not_found_handling: "404-page"`, which picks the nearest
-  `404.html` up the path.
-- `public/_headers`: immutable caching for `/_next/static/*`, a 60 second
-  revalidating cache for everything else, and the baseline security headers
-  (`X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`,
-  `Permissions-Policy`, `Strict-Transport-Security`). No CSP yet: the theme
-  bootstrap is an inline script.
-- The moon phase and the footer year are computed in the browser after mount
-  (`src/lib/use-moon.ts`); the build renders a neutral disc of the same size.
-- Switching language is a full page load (the two locales are separate root
-  layouts); navigation inside a language is client-side.
-
-## Commands
+Worker `oylab`, assets-only (`apps/site/wrangler.jsonc` has no `main`), custom domain
+`oylab.uz`, `workers.dev` and preview URLs off.
 
 ```
-pnpm build      # next build -> out/
-pnpm preview    # build, then wrangler dev serving out/ on http://localhost:8787
-pnpm deploy     # build, then wrangler deploy
+pnpm build        # next build -> apps/site/out  (fetches the snapshot first)
+pnpm preview      # build, then wrangler dev on http://localhost:8787
+pnpm deploy       # build, then wrangler deploy
 ```
 
-`pnpm exec wrangler deploy --dry-run` checks the configuration without
+`pnpm --filter site exec wrangler deploy --dry-run` checks the configuration without
 uploading.
 
-## One-time setup (account owner)
+One-time setup, in order:
 
-1. Add `oylab.uz` as a zone in the Cloudflare account and switch the
-   nameservers at the registrar to the two that Cloudflare shows. Custom
-   domains for Workers require the zone to be Active on the same account.
-   Import the mail records first so email keeps working.
-2. Log in once on the machine that deploys: `pnpm wrangler login`.
-3. `pnpm deploy`. Wrangler creates the Worker, uploads `out/`, and creates the
-   DNS record and certificate for `oylab.uz` from the `routes` entry. Check
-   `https://oylab.uz`, `/uz`, `/ru`, `/en` (301) and `/nope` (404).
-4. `www.oylab.uz`: add a proxied `AAAA` record `www` pointing to `100::`, then
-   Rules, Redirect Rules, template "Redirect from WWW to root", 301.
-5. Continuous deploys: Workers & Pages, `oylab`, Settings, Builds, connect the
-   GitHub repository `oylab-uz/oylab.uz`. Build command `pnpm build`, deploy
-   command `pnpm exec wrangler deploy`, production branch `main`. Every push
-   to `main` then deploys.
+1. Zone `oylab.uz` active on the Cloudflare account (nameservers switched at the
+   registrar; mail records imported first).
+2. `pnpm wrangler login` once on the deploying machine, then `pnpm deploy`. Wrangler
+   creates the Worker, the DNS record and the certificate for `oylab.uz`. Check `/`,
+   `/uz`, `/ru`, `/en` (301), `/nope` (404).
+3. `www.oylab.uz`: proxied `AAAA` record `www` pointing at `100::`, Redirect Rule
+   "Redirect from WWW to root", 301.
+4. Continuous builds: Workers & Pages, `oylab`, Settings, Builds, connect
+   `oylab-uz/oylab.uz`. Root directory `/`, build command `pnpm --filter site build`,
+   deploy command `pnpm --filter site exec wrangler deploy`, production branch `main`.
+   The build needs no secrets: the snapshot is public.
+5. Deploy hook: Settings, Builds, Deploy Hooks, create one for `main`. Its URL is a
+   secret; it goes into the admin's `.env` as `DEPLOY_HOOK_URL`.
 
-The `workers.dev` hostname and preview URLs stay off: the site is only
-reachable on its own hostname. For a one-off test before the zone is active,
-set `"workers_dev": true` and remove `routes` temporarily, then put both back.
+After the first deploy, Worker metrics show no invocations for page views.
 
-After the first deploy, Worker metrics should show no invocations for page
-views; only assets requests.
+## Media: R2
 
-## Images
+1. `pnpm wrangler r2 bucket create oylab-media`.
+2. R2, `oylab-media`, Settings, Custom Domains: add `media.oylab.uz`. Enable
+   Transformations for the zone if resized images are wanted later.
+3. R2, Manage API tokens: a token with Object Read & Write on `oylab-media`. Its
+   Access Key ID and Secret Access Key go into the admin's `.env`, with the account id.
 
-`images.unoptimized` is on: a static export has no image optimizer, and the
-team portraits are placeholders. Real photos will go through Cloudflare Image
-Transformations with a custom loader (planned with the content platform).
+## Admin: Hetzner box
 
-## Continuous integration
+Already in place on the box (`ssh server`, user `dev`):
 
-`.github/workflows/ci.yml` (added with the content platform) runs lint and
-`next build` on pull requests and pushes.
+- `~/apps/admin.oylab.uz/`: `repo` (clone of this repository), `docker-compose.yml` and
+  `update.sh` (copies of `apps/admin/deploy/`), `.env` (secrets, not in git).
+- Container `oylab-admin`, image built from `apps/admin/Dockerfile`, SQLite on the
+  volume `oylab_admin_data` at `/data`, joined to `caddy_network`, health check on
+  `/healthz`.
+- Caddy block in `~/apps/caddy/Caddyfile`:
+  `admin.oylab.uz { reverse_proxy oylab-admin:3000 }`.
+
+Until `.env` has the Access values, every request answers 401 (fail closed); until it has
+the R2 values, uploads and snapshots go to the container's local folder.
+
+### `.env` on the box
+
+See `apps/admin/.env.example`. Required for production: `CF_ACCESS_TEAM_DOMAIN`,
+`CF_ACCESS_AUD`, `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`,
+`R2_BUCKET=oylab-media`, `MEDIA_PUBLIC_URL=https://media.oylab.uz`, `DEPLOY_HOOK_URL`,
+`DATABASE_PATH=/data/oylab.sqlite`.
+
+### Cloudflare side for the admin
+
+1. DNS: a **proxied** (orange cloud) `AAAA` record `admin` to the box's IPv6 (and an `A`
+   record to its IPv4 if the box has one). Access only works on proxied records. Caddy
+   obtains its certificate over HTTP-01 through the proxy; keep the zone's SSL mode on
+   "Full".
+2. Zero Trust, Access, Applications: self-hosted application "OY Lab Admin" for
+   `admin.oylab.uz`. Login method: one-time PIN by email to start (Google can be added
+   later). Policy: Allow, the lab's email addresses. Copy the team domain
+   (`<team>.cloudflareaccess.com`) and the application's Audience tag into `.env`.
+3. Fill the R2 values and the deploy hook URL, then on the box:
+   `cd ~/apps/admin.oylab.uz && docker compose up -d`.
+
+### Updating the admin
+
+```
+ssh server
+cd ~/apps/admin.oylab.uz && ./update.sh      # git pull, rebuild image, restart
+docker compose logs -f oylab-admin           # logs
+```
+
+### Backup
+
+The whole state is one SQLite file plus R2. Copy the file out of the volume:
+
+```
+docker run --rm -v oylab_admin_data:/data -v "$PWD":/backup alpine \
+  sh -c "cp /data/oylab.sqlite /backup/oylab-$(date +%F).sqlite"
+```
+
+## What is still untested end to end
+
+The admin → R2 → deploy hook → Workers Builds leg needs the bucket, token and hook to
+exist. Everything up to the snapshot file and everything from a snapshot file to the
+served site has been verified locally and in the Workers runtime.
 
 ## Versions
 
-Pinned in `package.json`: `next` 16.4.5, `wrangler` 4.157.0 (ships workerd
-1.20261103.1, so `compatibility_date` must not be later than 2026-11-03).
+`next` 16.4.5, `wrangler` 4.157.0 (`compatibility_date` no later than 2026-11-03),
+`better-sqlite3` 13, Node 22 in the image. Pinned in the package files.
