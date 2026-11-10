@@ -51,9 +51,13 @@ function withinOneEdit(a: string, b: string): boolean {
   );
 }
 
-/** One typo is forgiven in a title word, for tokens long enough that a near miss is not another word. */
+/**
+ * One typo is forgiven in a title word, for tokens of six letters or more:
+ * shorter than that a near miss is usually another word ("reset" is one
+ * letter from the start of "research").
+ */
 function nearTitleWord(words: readonly string[], token: string): boolean {
-  if (token.length < 5) return false;
+  if (token.length < 6) return false;
   return words.some(
     (word) =>
       word[0] === token[0] &&
@@ -70,7 +74,8 @@ function tokenScore(prepared: PreparedDoc, token: string): number {
     fieldScore(prepared.text, token, 22, 20, 10),
   );
   if (exact > 0) return exact;
-  return nearTitleWord(prepared.titleWords, token) ? 35 : 0;
+  // Below any exact word match, so a guess never outranks what was actually typed.
+  return nearTitleWord(prepared.titleWords, token) ? 15 : 0;
 }
 
 /**

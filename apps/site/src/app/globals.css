@@ -185,6 +185,7 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      transition-delay: 0s !important;
     }
   }
 }
@@ -541,7 +542,8 @@
   body:has(.palette[open]) {
     overflow: hidden;
   }
-  @media (max-width: 639px) {
+  /* Same breakpoint, in rem, as the max-sm utilities on the palette's markup. */
+  @media (width < 40rem) {
     .palette {
       width: 100vw;
       height: 100dvh;

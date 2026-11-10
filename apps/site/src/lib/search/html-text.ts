@@ -1,5 +1,11 @@
-const BLOCK =
-  /<\/?(?:p|div|section|article|header|footer|h[1-6]|ul|ol|li|dl|dt|dd|pre|blockquote|figure|figcaption|table|thead|tbody|tr|td|th|br|hr|img)\b[^>]*>/gi;
+/** The inside of a tag: quoted attribute values may contain ">", which the serializer does not escape. */
+const ATTRS = `(?:"[^"]*"|'[^']*'|[^>"'])*`;
+
+const BLOCK = new RegExp(
+  `</?(?:p|div|section|article|header|footer|h[1-6]|ul|ol|li|dl|dt|dd|pre|blockquote|figure|figcaption|table|thead|tbody|tr|td|th|br|hr|img)\\b${ATTRS}>`,
+  "gi",
+);
+const TAG = new RegExp(`<[a-z/!]${ATTRS}>`, "gi");
 
 const NAMED: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
 
@@ -22,6 +28,6 @@ export function htmlToText(html: string): string {
     .replace(/<math\b[\s\S]*?<\/math>/gi, "")
     .replace(/<sup\b[\s\S]*?<\/sup>/gi, "")
     .replace(BLOCK, " ")
-    .replace(/<[^>]+>/g, "");
+    .replace(TAG, "");
   return decodeEntities(text).replace(/\s+/g, " ").trim();
 }

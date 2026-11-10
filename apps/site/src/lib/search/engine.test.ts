@@ -74,6 +74,15 @@ describe("search", () => {
     expect(ids("opem")).toEqual([]);
   });
 
+  it("does not take a short word that starts like a title for a typo", () => {
+    expect(ids("reset")).toEqual([]);
+  });
+
+  it("ranks what was typed above a guessed title", () => {
+    const set = prepare([doc("guess", "Tokenizer economics"), doc("exact", "A note", "We count tokens.")]);
+    expect(search(set, "tokens").map((hit) => hit.doc.id)).toEqual(["exact", "guess"]);
+  });
+
   it("returns an excerpt around the first body match", () => {
     const [hit] = search(docs, "quantization");
     expect(hit.excerpt).toContain("quantization");
