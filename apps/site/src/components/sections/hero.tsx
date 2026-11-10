@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { AbrField } from "@/components/ornament/abr-field";
 import { HeroMoon } from "@/components/sections/hero-moon";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { PlaceholderTag } from "@/components/ui/placeholder-tag";
@@ -43,7 +44,7 @@ export async function Hero() {
           </div>
         </div>
 
-        <HeroMoon />
+        <HeroMoon field={<AbrField className="absolute inset-0 size-full" />} />
       </div>
 
       <div className="border-t border-line">
