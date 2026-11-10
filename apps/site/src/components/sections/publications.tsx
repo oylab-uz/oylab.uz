@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "@phosphor-icons/react/ssr";
 import { getTranslations } from "next-intl/server";
+import { Seam } from "@/components/ornament/seam";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Link } from "@/i18n/navigation";
@@ -11,7 +12,8 @@ export async function Publications({ publications }: { publications: Publication
   const t = await getTranslations("publications");
 
   return (
-    <section id="publications" className="scroll-mt-16 border-t border-line">
+    <section id="publications" className="scroll-mt-16">
+      <Seam />
       <div className={cn(container, "py-24 md:py-32")}>
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} />
 

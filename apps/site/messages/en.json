@@ -202,5 +202,12 @@
     "title": "Something went dark.",
     "lead": "The page could not be rendered. Try again in a moment.",
     "retry": "Try again"
+  },
+  "girih": {
+    "axis": "nights of this month",
+    "legend": "filled tile = night passed",
+    "caption": "Night {night} of the lunar month · {phase}",
+    "label": "The lunar month as girih tiles: night {night} of 30, {phase}",
+    "labelStatic": "The nights of the current lunar month, drawn as girih tiles"
   }
 }

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { fontClassName } from "@/app/fonts";
 import { SiteHeader } from "@/components/header/site-header";
+import { OrnamentDefs } from "@/components/ornament/ornament-defs";
 import { Providers } from "@/components/providers";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeInit } from "@/components/theme/theme-init";
@@ -19,6 +20,7 @@ export async function SiteShell({ locale, children }: { locale: Locale; children
     <html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth" className={fontClassName}>
       <body className="flex min-h-dvh flex-col">
         <ThemeInit />
+        <OrnamentDefs />
         <Providers>
           <NextIntlClientProvider>
             <a

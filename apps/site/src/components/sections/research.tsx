@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Seam } from "@/components/ornament/seam";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SpotlightTile } from "@/components/ui/spotlight-tile";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
@@ -10,12 +11,13 @@ export async function Research() {
   const t = await getTranslations("research");
 
   return (
-    <section id="research" className="scroll-mt-16 border-t border-line">
+    <section id="research" className="scroll-mt-16">
+      <Seam />
       <div className={cn(container, "py-24 md:py-32")}>
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} lead={t("lead")} />
 
         <RevealGroup
-          className="mt-16 grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-3"
+          className="burchak mt-16 grid grid-cols-1 gap-px border border-line bg-line md:grid-cols-3"
           stagger={0.08}
           amount={0.1}
         >

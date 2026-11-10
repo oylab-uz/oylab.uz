@@ -32,6 +32,14 @@ export function moonPhase(date: Date = new Date()): number {
   return phase < 0 ? phase + 1 : phase;
 }
 
+/** A synodic month rounds up to thirty nights; the thirtieth is a short one. */
+export const LUNAR_NIGHTS = 30;
+
+/** Which night of the lunar month a phase falls on, 1..30. Night 1 begins at new moon. */
+export function lunarNight(phase: number): number {
+  return Math.min(LUNAR_NIGHTS, Math.floor(phase * SYNODIC_MONTH_DAYS) + 1);
+}
+
 /** Fraction of the disc that is lit, 0..1. */
 export function illumination(phase: number): number {
   return (1 - Math.cos(2 * Math.PI * phase)) / 2;
