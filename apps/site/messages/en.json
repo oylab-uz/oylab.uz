@@ -203,6 +203,30 @@
     "lead": "The page could not be rendered. Try again in a moment.",
     "retry": "Try again"
   },
+  "search": {
+    "open": "Search",
+    "title": "Search the site",
+    "placeholder": "Search the site",
+    "close": "Close",
+    "loading": "Loading the index",
+    "error": "The index could not be loaded.",
+    "retry": "Try again",
+    "empty": "Nothing matches “{query}”.",
+    "emptyHint": "Try a shorter word, or another language.",
+    "count": "{count, plural, =0 {No results} one {# result} other {# results}}",
+    "jump": "Jump to",
+    "groups": {
+      "sections": "On this site",
+      "journal": "Journal",
+      "publications": "Publications",
+      "people": "People"
+    },
+    "hints": {
+      "navigate": "navigate",
+      "open": "open",
+      "close": "close"
+    }
+  },
   "girih": {
     "axis": "nights of this month",
     "legend": "filled tile = night passed",

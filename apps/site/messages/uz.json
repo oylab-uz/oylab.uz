@@ -203,6 +203,30 @@
     "lead": "Sahifani koʼrsatib boʼlmadi. Birozdan soʼng qayta urinib koʼring.",
     "retry": "Qayta urinish"
   },
+  "search": {
+    "open": "Qidiruv",
+    "title": "Sayt boʼyicha qidiruv",
+    "placeholder": "Saytdan qidirish",
+    "close": "Yopish",
+    "loading": "Indeks yuklanmoqda",
+    "error": "Indeksni yuklab boʼlmadi.",
+    "retry": "Qayta urinish",
+    "empty": "“{query}” boʼyicha hech narsa topilmadi.",
+    "emptyHint": "Qisqaroq soʼz yoki boshqa tilda yozib koʼring.",
+    "count": "{count, plural, =0 {Natija yoʼq} other {# ta natija}}",
+    "jump": "Oʼtish",
+    "groups": {
+      "sections": "Saytda",
+      "journal": "Jurnal",
+      "publications": "Nashrlar",
+      "people": "Jamoa"
+    },
+    "hints": {
+      "navigate": "tanlash",
+      "open": "ochish",
+      "close": "yopish"
+    }
+  },
   "girih": {
     "axis": "shu oyning tunlari",
     "legend": "toʼla koshin = oʼtgan tun",
