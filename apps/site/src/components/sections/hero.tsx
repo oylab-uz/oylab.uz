@@ -2,14 +2,12 @@ import { getTranslations } from "next-intl/server";
 import { AbrField } from "@/components/ornament/abr-field";
 import { HeroMoon } from "@/components/sections/hero-moon";
 import { MagneticButton } from "@/components/ui/magnetic-button";
-import { PlaceholderTag } from "@/components/ui/placeholder-tag";
 import { cn, container } from "@/lib/cn";
 import { stats } from "@/lib/content";
 
 export async function Hero() {
   const t = await getTranslations("hero");
   const tStats = await getTranslations("stats");
-  const a11y = await getTranslations("a11y");
 
   return (
     <section className="relative">
@@ -55,10 +53,7 @@ export async function Hero() {
           )}
         >
           <div>
-            <dt className="eyebrow">
-              {tStats("founded")}
-              {stats.placeholder ? <PlaceholderTag label={a11y("placeholder")} /> : null}
-            </dt>
+            <dt className="eyebrow">{tStats("founded")}</dt>
             <dd className="mt-2 font-serif text-3xl tabular text-ink-strong">{stats.founded}</dd>
           </div>
           <div>
