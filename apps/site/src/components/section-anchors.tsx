@@ -3,10 +3,15 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-/** The element a same-page link points at, if the link is one and the element exists. */
-function sectionFor(link: HTMLAnchorElement): HTMLElement | null {
+/**
+ * Where a link to the page being read should scroll: a section, the top of
+ * the page for a link with no hash (the logo), or null when the link goes
+ * somewhere else and is none of our business.
+ */
+function targetFor(link: HTMLAnchorElement): HTMLElement | "top" | null {
   const url = new URL(link.href, location.href);
-  if (url.origin !== location.origin || url.pathname !== location.pathname || url.hash.length < 2) return null;
+  if (url.origin !== location.origin || url.pathname !== location.pathname || url.search !== location.search) return null;
+  if (url.hash.length < 2) return "top";
   return document.getElementById(decodeURIComponent(url.hash.slice(1)));
 }
 
@@ -31,7 +36,8 @@ function settle() {
 
 /**
  * Keeps section names out of the address bar. A link to a section of the page
- * being read scrolls there and leaves the URL alone; arriving from another
+ * being read scrolls there and leaves the URL alone, and a link to the page
+ * itself (the logo on the landing page) scrolls to the top; arriving from another
  * page with a hash scrolls as usual, then the hash is dropped. The links stay
  * ordinary `/#section` anchors, so they still work before this loads.
  */
@@ -45,13 +51,14 @@ export function SectionAnchors() {
     const onClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const link = event.target instanceof Element ? event.target.closest("a") : null;
-      if (!link || link.target === "_blank") return;
-      const section = sectionFor(link);
-      if (!section) return;
-      // Preventing the default here also stops the router's own navigation.
+      if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+      const target = targetFor(link);
+      if (!target) return;
+      // Preventing the default here also stops the router's own navigation, which for a
+      // link to the address already shown would do nothing at all.
       event.preventDefault();
       // A frame later: the click may also be closing a menu or the search palette.
-      requestAnimationFrame(() => goTo(section));
+      requestAnimationFrame(() => (target === "top" ? window.scrollTo({ top: 0 }) : goTo(target)));
     };
 
     // Capture phase, so this runs before the link's own handlers.
