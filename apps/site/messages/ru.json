@@ -219,12 +219,21 @@
       "sections": "На сайте",
       "journal": "Журнал",
       "publications": "Публикации",
-      "people": "Люди"
+      "people": "Люди",
+      "actions": "Действия"
     },
     "hints": {
       "navigate": "выбрать",
       "open": "открыть",
       "close": "закрыть"
+    },
+    "actions": {
+      "theme": "Сменить тему",
+      "themeHint": "Светлая или ночная",
+      "language": "Язык",
+      "copyEmail": "Скопировать наш email",
+      "email": "Написать нам",
+      "rss": "RSS-лента журнала"
     }
   },
   "girih": {

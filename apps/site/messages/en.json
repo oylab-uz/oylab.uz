@@ -219,12 +219,21 @@
       "sections": "On this site",
       "journal": "Journal",
       "publications": "Publications",
-      "people": "People"
+      "people": "People",
+      "actions": "Actions"
     },
     "hints": {
       "navigate": "navigate",
       "open": "open",
       "close": "close"
+    },
+    "actions": {
+      "theme": "Switch theme",
+      "themeHint": "Light surface or night",
+      "language": "Language",
+      "copyEmail": "Copy our email address",
+      "email": "Write to us",
+      "rss": "Journal RSS feed"
     }
   },
   "girih": {
