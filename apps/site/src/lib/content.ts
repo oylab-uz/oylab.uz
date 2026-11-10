@@ -24,11 +24,10 @@ export const site = {
 } as const;
 
 export const stats = {
-  placeholder: true,
-  founded: "2024",
-  researchers: "14",
-  papers: "9",
-  releases: "6",
+  founded: "2021",
+  researchers: "4",
+  papers: "3",
+  releases: "2",
 } as const;
 
 export type ResearchAreaId = "models" | "science" | "systems" | "applied";
