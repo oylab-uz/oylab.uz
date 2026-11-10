@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn, container } from "@/lib/cn";
 import { HeaderMark } from "@/components/moon/header-mark";
+import { Search } from "@/components/search/search";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -122,6 +123,7 @@ export function SiteHeader() {
         <DesktopNav pathname={pathname} label={a11y("mainNavigation")} />
 
         <div className="flex shrink-0 items-center gap-1">
+          <Search onOpen={() => setOpen(false)} />
           <LocaleSwitcher label={a11y("language")} className="hidden sm:flex" />
           <ThemeToggle toLight={a11y("toLight")} toDark={a11y("toDark")} />
           <button
