@@ -5,7 +5,8 @@ import { formatDate } from "@/lib/format";
 import type en from "../../../messages/en.json";
 import { htmlToText } from "./html-text";
 
-export type SearchGroup = "sections" | "journal" | "publications" | "people";
+/** "actions" never comes from the index: the palette adds its own commands under it. */
+export type SearchGroup = "sections" | "journal" | "publications" | "people" | "actions";
 
 export type SearchDoc = {
   id: string;

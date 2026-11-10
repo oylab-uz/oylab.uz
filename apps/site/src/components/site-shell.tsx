@@ -5,6 +5,7 @@ import { fontClassName } from "@/app/fonts";
 import { SiteHeader } from "@/components/header/site-header";
 import { OrnamentDefs } from "@/components/ornament/ornament-defs";
 import { Providers } from "@/components/providers";
+import { SectionAnchors } from "@/components/section-anchors";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeInit } from "@/components/theme/theme-init";
 import type { Locale } from "@/i18n/routing";
@@ -29,6 +30,7 @@ export async function SiteShell({ locale, children }: { locale: Locale; children
             >
               {a11y("skipToContent")}
             </a>
+            <SectionAnchors />
             <SiteHeader />
             <div id="content" className="flex-1">
               {children}

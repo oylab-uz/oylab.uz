@@ -219,12 +219,21 @@
       "sections": "Saytda",
       "journal": "Jurnal",
       "publications": "Nashrlar",
-      "people": "Jamoa"
+      "people": "Jamoa",
+      "actions": "Amallar"
     },
     "hints": {
       "navigate": "tanlash",
       "open": "ochish",
       "close": "yopish"
+    },
+    "actions": {
+      "theme": "Mavzuni almashtirish",
+      "themeHint": "Yorugʼ yoki tungi",
+      "language": "Til",
+      "copyEmail": "Email manzilimizni nusxalash",
+      "email": "Bizga yozing",
+      "rss": "Jurnal RSS tasmasi"
     }
   },
   "girih": {

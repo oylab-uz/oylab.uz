@@ -16,10 +16,13 @@ import {
   type ReactNode,
 } from "react";
 import { GirihStar } from "@/components/ornament/girih-star";
+import { toggleTheme } from "@/components/theme/theme";
 import { Link, usePathname } from "@/i18n/navigation";
-import type { Locale } from "@/i18n/routing";
+import { localeNames, routing, type Locale } from "@/i18n/routing";
 import { cn } from "@/lib/cn";
-import { pinned, search, type SearchHit } from "@/lib/search/engine";
+import { site } from "@/lib/content";
+import type { SearchDoc } from "@/lib/search/docs";
+import { pinned, prepare, search, type SearchHit } from "@/lib/search/engine";
 import { queryTokens } from "@/lib/search/fold";
 import { highlight } from "@/lib/search/highlight";
 import { loadSearchIndex, useSearchIndex } from "@/lib/search/index-store";
@@ -67,6 +70,10 @@ function Marked({ text, tokens }: { text: string; tokens: readonly string[] }) {
   );
 }
 
+/** Commands are entries whose href is a verb for the palette, not a place: "action:theme", "locale:uz". */
+const ACTION = "action:";
+const LOCALE = "locale:";
+
 /**
  * Site search: the header button and the palette it opens, also on ⌘K, Ctrl K
  * and "/". The index for the current language is a static file fetched on
@@ -98,15 +105,48 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
     setOpen(false);
   }
 
+  /** The palette's own commands, searched alongside the index. */
+  const actions = useMemo(() => {
+    const entry = (id: string, title: string, href: string, text = "", subtitle = ""): SearchDoc => ({
+      id: `action:${id}`,
+      group: "actions",
+      title,
+      subtitle,
+      text,
+      href,
+    });
+    return prepare([
+      entry("theme", t("actions.theme"), `${ACTION}theme`, t("actions.themeHint")),
+      ...routing.locales
+        .filter((other) => other !== locale)
+        .map((other) => entry(`locale-${other}`, localeNames[other], `${LOCALE}${other}`, "", t("actions.language"))),
+      entry("copy-email", t("actions.copyEmail"), `${ACTION}copy-email`, site.email),
+      entry("email", t("actions.email"), `mailto:${site.email}`, site.email),
+      entry("rss", t("actions.rss"), "/journal/feed.xml"),
+    ]);
+  }, [locale, t]);
+
   /**
    * Results in display order, under their headings; `offset` is a section's
-   * first position in the whole list. Before anything is typed, the pinned entries.
+   * first position in the whole list. Before anything is typed, the pinned
+   * entries and every command.
    */
   const sections = useMemo(() => {
     if (index.status !== "ready") return [];
-    if (tokens.length === 0) return [{ key: "jump", label: t("jump"), hits: pinned(index.docs), offset: 0 }];
+    if (tokens.length === 0) {
+      const places = pinned(index.docs);
+      return [
+        { key: "jump", label: t("jump"), hits: places, offset: 0 },
+        {
+          key: "actions",
+          label: t("groups.actions"),
+          hits: actions.map(({ doc }) => ({ doc, score: 0, excerpt: doc.text })),
+          offset: places.length,
+        },
+      ];
+    }
     const byGroup = new Map<string, SearchHit[]>();
-    for (const hit of search(index.docs, deferredQuery)) {
+    for (const hit of search([...index.docs, ...actions], deferredQuery)) {
       const hits = byGroup.get(hit.doc.group);
       if (hits) hits.push(hit);
       else byGroup.set(hit.doc.group, [hit]);
@@ -117,7 +157,7 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
       offset += hits.length;
       return section;
     });
-  }, [index, tokens, deferredQuery, t]);
+  }, [index, actions, tokens, deferredQuery, t]);
 
   const count = sections.reduce((total, section) => total + section.hits.length, 0);
   const current = count === 0 ? -1 : Math.min(active, count - 1);
@@ -163,6 +203,13 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
 
   const close = () => dialogRef.current?.close();
 
+  const run = (action: string) => {
+    close();
+    if (action === "theme") toggleTheme();
+    // Clipboard access can be refused; the address is also on the page, under Contact.
+    else if (action === "copy-email") void navigator.clipboard?.writeText(site.email).catch(() => {});
+  };
+
   const onInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.nativeEvent.isComposing) return;
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
@@ -171,7 +218,7 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
     } else if (event.key === "Enter") {
       event.preventDefault();
       // Through the link itself, so Enter and a click take the same road.
-      resultsRef.current?.querySelector<HTMLAnchorElement>('[aria-selected="true"]')?.click();
+      resultsRef.current?.querySelector<HTMLElement>('[aria-selected="true"]')?.click();
     }
   };
 
@@ -257,22 +304,20 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
                     {section.hits.map((hit, row) => {
                       const at = section.offset + row;
                       const selected = at === current;
-                      return (
-                        <Link
-                          key={hit.doc.id}
-                          id={`${listId}-${at}`}
-                          href={hit.doc.href}
-                          prefetch={false}
-                          role="option"
-                          aria-selected={selected}
-                          tabIndex={-1}
-                          onClick={close}
-                          onPointerMove={() => setActive(at)}
-                          className={cn(
-                            "grid grid-cols-[0.75rem_1fr_auto] items-center gap-3 rounded-lg px-3 py-2.5 outline-none",
-                            selected && "bg-surface",
-                          )}
-                        >
+                      const { href } = hit.doc;
+                      const option = {
+                        id: `${listId}-${at}`,
+                        role: "option",
+                        "aria-selected": selected,
+                        tabIndex: -1,
+                        onPointerMove: () => setActive(at),
+                        className: cn(
+                          "grid w-full cursor-pointer grid-cols-[0.75rem_1fr_auto] items-center gap-3 rounded-lg px-3 py-2.5 text-left outline-none",
+                          selected && "bg-surface",
+                        ),
+                      } as const;
+                      const body = (
+                        <>
                           <GirihStar
                             size={12}
                             filled
@@ -293,6 +338,34 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
                               <Marked text={hit.doc.subtitle} tokens={tokens} />
                             </span>
                           ) : null}
+                        </>
+                      );
+                      if (href.startsWith(ACTION)) {
+                        return (
+                          <button key={hit.doc.id} type="button" {...option} onClick={() => run(href.slice(ACTION.length))}>
+                            {body}
+                          </button>
+                        );
+                      }
+                      if (href.startsWith(LOCALE)) {
+                        const other = href.slice(LOCALE.length) as Locale;
+                        return (
+                          <Link key={hit.doc.id} href={pathname} locale={other} hrefLang={other} lang={other} prefetch={false} {...option} onClick={close}>
+                            {body}
+                          </Link>
+                        );
+                      }
+                      // Mail and the feed are not routes: plain anchors.
+                      if (!href.startsWith("/") || href.endsWith(".xml")) {
+                        return (
+                          <a key={hit.doc.id} href={href} {...option} onClick={close}>
+                            {body}
+                          </a>
+                        );
+                      }
+                      return (
+                        <Link key={hit.doc.id} href={href} prefetch={false} {...option} onClick={close}>
+                          {body}
                         </Link>
                       );
                     })}
