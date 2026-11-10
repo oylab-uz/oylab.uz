@@ -1,6 +1,6 @@
 # OY Lab (oylab.uz) — Design Proposal
 
-Status: approved and implemented, 2026-11-03. Decisions taken: Surface (light) default theme, Spectral + Geist + Geist Mono, `uz` at the root, placeholder content. See section 10 for what changed during the build.
+Status: approved and implemented, 2026-11-03. Decisions taken: Surface (light) default theme, Spectral + Geist + Geist Mono, `uz` at the root, placeholder content. See section 10 for what changed during the build, section 11 for the ornament layer and section 12 for search (both 2026-11-10).
 
 ## 1. Brief
 
@@ -11,7 +11,7 @@ OY Lab is a frontier research lab for computing and science in Uzbekistan and po
 - **Mark.** The "O" in OY is a moon disc that shows the real lunar phase for today. The phase is computed from the date (synodic month, 29.53 days), so the site is slightly different every night. It is computed in a Server Component with hourly ISR revalidation, so the first paint is already correct and nothing recomputes on the client.
 - **Process metaphor.** Research is shown "in phases": New moon = Question, Waxing = Experiment, Full = Publish, Waning = Deploy and reflect. The process section is a sticky-scroll sequence where the moon changes phase as the reader scrolls.
 - **Material.** Lunar regolith: an achromatic palette, hairline rules, a faint fixed grain overlay (opacity 0.03, pointer-events none), no cards unless elevation matters.
-- **No accent color.** Emphasis comes from inversion (ink on paper flips to paper on ink), weight and spacing. Focus rings use the ink color.
+- **No accent color.** Emphasis comes from inversion (ink on paper flips to paper on ink), weight and spacing. Focus rings use the ink color. The ornament layer (section 11) is the one exception: two dyes, on ornament strokes only.
 
 ## 3. Palette (OKLCH, chroma 0)
 
@@ -95,3 +95,28 @@ Note: `create-next-app` refuses a directory that contains `.serena/`, so scaffol
 - **Hero reveal is CSS only.** The hero text animates with a keyframe stagger instead of Motion, so it is readable before JavaScript loads. Sections below the fold still use the Motion reveal.
 - **Headline sizes** stay at `text-4xl md:text-6xl` as the design-taste rules require; Russian headlines wrap to five or six lines on narrow phones, which is accepted.
 - **No contact form yet.** Contact is a mail link. A form (for example through Resend) is a later addition.
+
+## 11. Ornament layer (2026-11-10)
+
+Uzbek ornament, taken from the design canvas "OY Lab — oylab.uz": its ornament vocabulary only, not its palette or its type. One rule governs the layer: structure, not wallpaper. An ornament marks a boundary, a frame or a figure. It never sits behind running copy, and it is `aria-hidden` unless it carries data.
+
+| Ornament | What it is | Where it is used |
+|---|---|---|
+| Girih | The eight-point star of Timurid tile work: two squares on one centre, one turned 45°. Geometry in `src/lib/girih.ts`. | The lunar-month figure in Process (`GirihMonth`), the boss at the centre of every seam and the marker of the selected search result (`GirihStar`). |
+| Seam | A row of nailheads, as on the edge of a sandiq chest. | Between the landing sections from Research down, in place of the hairline (`Seam`). |
+| Abr | An ikat band: warp threads with two tied motifs, ragged at the ends because the thread is dyed before it is woven. | Crossing each seam in both gutters, on screens 1024 px and wider. One `<symbol>` in `OrnamentDefs`, reused by every seam. |
+| Burchak | The corner fittings of a chest, on two opposite corners of a frame. | The research grid and the search palette (`.burchak`). |
+| Iwan | The pointed arch of a portal, as a clip path in bounding-box units so it fits any box. | Team portraits, and the niche the hero moon floats in (`.iwan`, `IwanOutline`). |
+
+- **The lunar-month figure.** Thirty tiles, one per night of the lunar month. Filled tiles are nights passed; the gold tile is tonight. Oy is both moon and month in Uzbek. It is computed from the visitor's clock like every other moon on the site, so the static HTML carries the empty lattice and nothing on it is invented.
+- **Colour.** Three tokens in `globals.css`. `--qalay` (tin) is a grey for nails, corners and strapwork. `--atlas-qirmiz` (red) and `--atlas-sariq` (gold) are the two dyes, each with a Night value. The dyes colour ornament strokes only: the abr motifs, tonight's tile, the selected search result, a frame's corners on hover. Text, controls and focus rings stay achromatic.
+- **Motion.** Tiles fill one after another on mount, 32 ms apart, so tonight's lands last. Opacity and transform only; reduced motion shows the final state at once.
+- **Phones.** The abr bands are hidden below 1024 px, where there is no gutter for them. Everything else scales.
+
+## 12. Search (2026-11-10)
+
+- **Opening it.** ⌘K, Ctrl K or `/` from any page, or the button in the header (a pill with the shortcut from 1280 px, an icon below that). The shortcut is matched by key position as well as by letter, so it works on a Russian layout.
+- **What it searches.** Everything a visitor can read in the current language: the landing page section by section (goals, research areas, process steps, open roles), people, journal posts in full and publications with authors and abstract. Before anything is typed it offers the eight places the navigation names.
+- **How it matches.** Every word of the query must be found. A title outranks a subtitle, which outranks body text; a whole word outranks a word start, which outranks a match inside a word. One typo is forgiven in a title word of five letters or more. Case, punctuation, Latin diacritics and Uzbek apostrophes are ignored (oʻ, oʼ, o' and o all match), and ё matches е. Matches are marked in the page's own spelling.
+- **The palette.** A native modal `<dialog>`, full screen on phones. The input is a combobox over a listbox: arrows move the selection while focus stays in the input, Enter follows the selected link, Escape closes. Results are grouped (On this site, Journal, Publications, People) and a status line announces the count.
+- **Where the index comes from.** See `ARCHITECTURE.md`: a static file per language, built with the site.
