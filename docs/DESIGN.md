@@ -104,12 +104,12 @@ Uzbek ornament, taken from the design canvas "OY Lab — oylab.uz": its ornament
 |---|---|---|
 | Girih | The eight-point star of Timurid tile work: two squares on one centre, one turned 45°. Geometry in `src/lib/girih.ts`. | The lunar-month figure in Process (`GirihMonth`), the boss at the centre of every seam and the marker of the selected search result (`GirihStar`). |
 | Seam | A row of nailheads, as on the edge of a sandiq chest. | Between the landing sections from Research down, in place of the hairline (`Seam`). |
-| Abr | An ikat band: warp threads with two tied motifs, ragged at the ends because the thread is dyed before it is woven. | Crossing each seam in both gutters, on screens 1024 px and wider. One `<symbol>` in `OrnamentDefs`, reused by every seam. |
+| Abr | An ikat band: warp threads with two tied motifs, ragged at the ends because the thread is dyed before it is woven. | As a whole width of cloth behind the hero iwan (`AbrField`), and as a band crossing each seam in both gutters on screens 1024 px and wider (one `<symbol>` in `OrnamentDefs`, reused by every seam). |
 | Burchak | The corner fittings of a chest, on two opposite corners of a frame. | The research grid and the search palette (`.burchak`). |
-| Iwan | The pointed arch of a portal, as a clip path in bounding-box units so it fits any box. | Team portraits, and the niche the hero moon floats in (`.iwan`, `IwanOutline`). |
+| Iwan | The pointed arch of a portal, as a clip path in bounding-box units so it fits any box. | Team portraits, and the arch cut out of the hero cloth, in which the live moon floats; by night it glows faintly (`.iwan`, `IwanOutline`, `.iwan-glow`). |
 
 - **The lunar-month figure.** Thirty tiles, one per night of the lunar month. Filled tiles are nights passed; the gold tile is tonight. Oy is both moon and month in Uzbek. It is computed from the visitor's clock like every other moon on the site, so the static HTML carries the empty lattice and nothing on it is invented.
-- **Colour.** Three tokens in `globals.css`. `--qalay` (tin) is a grey for nails, corners and strapwork. `--atlas-qirmiz` (red) and `--atlas-sariq` (gold) are the two dyes, each with a Night value. The dyes colour ornament strokes only: the abr motifs, tonight's tile, the selected search result, a frame's corners on hover. Text, controls and focus rings stay achromatic.
+- **Colour.** Three tokens in `globals.css`. `--qalay` (tin) is a grey for nails, corners and strapwork. The dyes are atlas colours: `--atlas-qirmiz` (red) leads by day and `--atlas-kok` (blue) by night, through `--abr-lead`; `--atlas-sariq` (gold) is the second dye in both. The dyes colour ornament strokes only: the abr motifs, tonight's tile, the selected search result, a frame's corners on hover. Text, controls and focus rings stay achromatic.
 - **Motion.** Tiles fill one after another on mount, 32 ms apart, so tonight's lands last. Opacity and transform only; reduced motion shows the final state at once.
 - **Phones.** The abr bands are hidden below 1024 px, where there is no gutter for them. Everything else scales.
 

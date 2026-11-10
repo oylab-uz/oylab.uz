@@ -3,10 +3,14 @@
 import { useTranslations } from "next-intl";
 import { MoonDisc } from "@/components/moon/moon-disc";
 import { IwanOutline } from "@/components/ornament/iwan-outline";
+import type { ReactNode } from "react";
 import { useMoonTonight } from "@/lib/use-moon";
 
-/** The hero disc and caption, computed from the visitor's clock after mount. */
-export function HeroMoon() {
+/**
+ * The hero disc and caption, computed from the visitor's clock after mount.
+ * `field` is the cloth behind the iwan, rendered on the server and passed in.
+ */
+export function HeroMoon({ field }: { field: ReactNode }) {
   const moon = useMoonTonight();
   const t = useTranslations("hero");
   const tMoon = useTranslations("moon.phases");
@@ -15,20 +19,20 @@ export function HeroMoon() {
 
   return (
     <div className="flex flex-col items-center gap-6 lg:col-span-5 lg:items-end">
-      {/* The moon seen through an iwan: a niche in the arch's shape, the disc floating inside it. */}
-      <div className="relative aspect-[3/4] w-[min(72vw,440px,calc((100dvh-13rem)*0.75))]">
-        {/* The arch fades out toward the ground, so the niche has no hard bottom edge. */}
-        <div aria-hidden className="absolute inset-0 [mask-image:linear-gradient(#000_52%,transparent_94%)]">
-          <div className="iwan absolute inset-0 bg-surface" />
+      {/* The moon seen through an iwan: an arch cut out of a width of abr cloth, the disc floating inside it. */}
+      <div className="relative grid h-[min(64dvh,560px)] min-h-[340px] w-full place-items-center max-lg:-mx-4 max-lg:w-[calc(100%+2rem)] sm:max-lg:-mx-6 sm:max-lg:w-[calc(100%+3rem)]">
+        {field}
+        <div className="iwan-glow relative aspect-[3/4] h-[74%]">
+          <div aria-hidden className="iwan absolute inset-0 bg-bg" />
           <IwanOutline className="absolute inset-0 size-full text-qalay" />
-        </div>
-        <div className="absolute inset-x-[14%] top-[21%] motion-safe:animate-float">
-          <MoonDisc
-            phase={moon?.phase ?? null}
-            size={440}
-            className="h-auto w-full"
-            title={moon && phaseLabel ? a11y("moonAlt", { phase: phaseLabel, percent: moon.percent }) : undefined}
-          />
+          <div className="absolute inset-x-[14%] top-[21%] motion-safe:animate-float">
+            <MoonDisc
+              phase={moon?.phase ?? null}
+              size={440}
+              className="h-auto w-full"
+              title={moon && phaseLabel ? a11y("moonAlt", { phase: phaseLabel, percent: moon.percent }) : undefined}
+            />
+          </div>
         </div>
       </div>
       <p className="eyebrow tabular min-h-[1.25em]">

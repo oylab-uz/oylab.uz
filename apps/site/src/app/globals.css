@@ -6,9 +6,9 @@
   OY Lab palette. Achromatic on purpose: every colour is OKLCH with zero
   chroma. "Surface" is the lit lunar surface, "Night" is the sky behind it.
 
-  The one exception is the ornament layer further down: tin (qalay) and two
-  atlas dyes, qirmiz red and sariq gold. They colour ornament strokes only,
-  never text and never a control.
+  The one exception is the ornament layer further down: tin (qalay) and the
+  atlas dyes, qirmiz red and sariq gold by day, kok blue and sariq by night.
+  They colour ornament strokes only, never text and never a control.
 */
 :root {
   --bg: oklch(96.5% 0 0);
@@ -25,7 +25,10 @@
   --qalay: oklch(62% 0 0);
   --atlas-qirmiz: #9e2b2b;
   --atlas-sariq: #c08a1e;
+  --abr-lead: var(--atlas-qirmiz);
   --abr-veil: 0.7;
+  --abr-field-veil: 0.22;
+  --iwan-glow: none;
   /* Masks, so the ornament takes its colour from a token and follows the theme. */
   --nail-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 8'><circle cx='8' cy='4' r='1.5'/><circle cx='8' cy='4' r='3' fill='none' stroke='%23000' opacity='.55'/></svg>");
   --burchak-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M.75 12V.75H12' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round'/><path d='M4 12V4h8' fill='none' stroke='%23000' stroke-linecap='round' opacity='.7'/><circle cx='2.5' cy='2.5' r='.9'/></svg>");
@@ -47,7 +50,11 @@
   --qalay: oklch(56% 0 0);
   --atlas-qirmiz: #d1625f;
   --atlas-sariq: #e3bc63;
+  --atlas-kok: #6fa8c9;
+  --abr-lead: var(--atlas-kok);
   --abr-veil: 0.7;
+  --abr-field-veil: 0.3;
+  --iwan-glow: 0 0 48px rgb(228 207 136 / 0.18), 0 0 120px rgb(228 207 136 / 0.08);
   color-scheme: dark;
 }
 
@@ -418,7 +425,7 @@
     stroke-width: 1;
   }
   .abr-lead path {
-    stroke: var(--atlas-qirmiz);
+    stroke: var(--abr-lead);
   }
   .abr-second path {
     stroke: var(--atlas-sariq);
@@ -427,6 +434,16 @@
   .abr-dye path.abr-feather {
     stroke: var(--bg);
     opacity: 0.55;
+  }
+
+  /* In the hero the cloth is a whole field behind the iwan, quieter than the bands. */
+  .abr-field-dye {
+    opacity: var(--abr-field-veil);
+  }
+  /* By night the iwan glows faintly, as a lit doorway does. Rounded to follow the arch. */
+  .iwan-glow {
+    border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+    box-shadow: var(--iwan-glow);
   }
 
   /* Burchak: the corner fittings of a chest, on two opposite corners of a frame. */
