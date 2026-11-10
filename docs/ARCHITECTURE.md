@@ -71,6 +71,12 @@ is why it can be public and the build needs no secret.
   redirected to the list.
 - The moon phase and the footer year are computed in the browser after mount; the HTML
   carries a neutral disc of the same size.
+- Search needs no server either. `app/search-index/[file]/route.ts` emits one static
+  index per language (`out/search-index/en.json`, `uz.json`, `ru.json`) from the page copy
+  in `messages/` and the snapshot, a few kilobytes each. The palette
+  (`components/search`) downloads its language's index the first time it opens and matches
+  in the browser (`lib/search`). A publish rebuilds the index with the pages, so a new
+  post is searchable as soon as it is live.
 - `public/_headers`: immutable caching for hashed chunks, 60 s revalidation for HTML,
   nosniff, referrer, frame, permissions and HSTS headers.
 
@@ -128,7 +134,7 @@ bun install
 bun run dev            # site on http://localhost:3000, empty or last fetched snapshot
 bun run dev:admin      # admin on http://localhost:3300, SQLite in apps/admin/data
 bun run --filter admin seed
-bun run test        # content package + admin unit tests
+bun run test        # content package, site and admin unit tests
 ```
 
 To see admin content on the local site: publish in the admin (writes
