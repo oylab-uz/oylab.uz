@@ -22,6 +22,21 @@ describe("fold", () => {
     expect(fold("Мой Ўзбекистон қишлоғи")).toBe("мой ўзбекистон қишлоғи");
   });
 
+  it("does not let invisible characters split a word", () => {
+    expect(fold("to\u00ADken\u200Bizer")).toBe("tokenizer");
+  });
+
+  it("composes a decomposed query", () => {
+    expect(fold("мои\u0306")).toBe("мой");
+  });
+
+  it("keeps the map in step past letters outside the BMP", () => {
+    const text = "𝐀 moon";
+    const { folded, map } = foldWithMap(text);
+    expect(map).toHaveLength(folded.length);
+    expect(text.slice(map[folded.indexOf("moon")])).toBe("moon");
+  });
+
   it("keeps digits", () => {
     expect(fold("GPT-4 in 2026")).toBe("gpt 4 in 2026");
   });

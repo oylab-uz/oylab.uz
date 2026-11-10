@@ -43,6 +43,7 @@ function isEditable(target: EventTarget | null) {
 function Key({ children, className }: { children: ReactNode; className: string }) {
   return (
     <kbd
+      aria-hidden
       className={cn(
         "h-5 min-w-5 place-items-center rounded-[4px] border border-line-strong px-1 font-mono text-[10px] leading-none text-muted",
         className,
@@ -80,6 +81,8 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
   const index = useSearchIndex(locale);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  /** Whether the current press began on the backdrop; a text selection dragged out of the palette did not. */
+  const pressedBackdrop = useRef(false);
   const listId = useId();
 
   const [open, setOpen] = useState(false);
@@ -124,9 +127,12 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
 
   useEffect(() => {
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.repeat) return;
       const modifier = event.metaKey || event.ctrlKey;
-      // `code` as well as `key`: on a Russian layout the K key types "л".
-      if (modifier && !event.altKey && !event.shiftKey && (event.key.toLowerCase() === "k" || event.code === "KeyK")) {
+      // By letter on Latin layouts (Dvorak and Colemak move K); by position where the key types
+      // something else entirely, as on a Russian layout, where it is "л".
+      const isK = /^[a-z]$/i.test(event.key) ? event.key.toLowerCase() === "k" : event.code === "KeyK";
+      if (modifier && !event.altKey && !event.shiftKey && isK) {
         event.preventDefault();
         setOpen((value) => !value);
       } else if (event.key === "/" && !modifier && !event.altKey && !isEditable(event.target)) {
@@ -194,9 +200,12 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
           setQuery("");
           setActive(0);
         }}
-        onClick={(event) => {
+        onPointerDown={(event) => {
           // Only the backdrop reports the dialog itself as the target.
-          if (event.target === event.currentTarget) close();
+          pressedBackdrop.current = event.target === event.currentTarget;
+        }}
+        onClick={(event) => {
+          if (pressedBackdrop.current && event.target === event.currentTarget) close();
         }}
       >
         <div className="burchak max-sm:h-full max-sm:before:hidden max-sm:after:hidden">
@@ -208,7 +217,7 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
                 inputMode="search"
                 enterKeyHint="go"
                 role="combobox"
-                aria-expanded
+                aria-expanded={count > 0}
                 aria-controls={listId}
                 aria-activedescendant={current >= 0 ? `${listId}-${current}` : undefined}
                 aria-autocomplete="list"
@@ -222,6 +231,7 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
                 onChange={(event) => {
                   setQuery(event.target.value);
                   setActive(0);
+                  resultsRef.current?.scrollTo({ top: 0 });
                 }}
                 onKeyDown={onInputKeyDown}
                 className="h-14 min-w-0 flex-1 bg-transparent text-base text-ink-strong outline-none placeholder:text-muted"
@@ -241,7 +251,7 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
               <div id={listId} role="listbox" aria-label={t("title")}>
                 {sections.map((section) => (
                   <div key={section.key} role="group" aria-labelledby={`${listId}-${section.key}`}>
-                    <p id={`${listId}-${section.key}`} className="eyebrow px-3 pt-4 pb-2">
+                    <p id={`${listId}-${section.key}`} role="presentation" className="eyebrow px-3 pt-4 pb-2">
                       {section.label}
                     </p>
                     {section.hits.map((hit, row) => {
@@ -252,6 +262,7 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
                           key={hit.doc.id}
                           id={`${listId}-${at}`}
                           href={hit.doc.href}
+                          prefetch={false}
                           role="option"
                           aria-selected={selected}
                           tabIndex={-1}
@@ -331,7 +342,13 @@ export function Search({ onOpen }: { onOpen?: () => void }) {
             </div>
 
             <p role="status" aria-live="polite" className="sr-only">
-              {index.status === "ready" && searching ? t("count", { count }) : ""}
+              {index.status === "error"
+                ? t("error")
+                : index.status !== "ready"
+                  ? t("loading")
+                  : searching
+                    ? t("count", { count })
+                    : ""}
             </p>
           </div>
         </div>

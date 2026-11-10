@@ -7,12 +7,14 @@
 
 const APOSTROPHE = /['`´ʹʻʼ‘’′]/;
 const MARK = /\p{M}/u;
+/** Soft hyphens, zero-width joiners and the like: invisible, so they must not split a word. */
+const FORMAT = /\p{Cf}/u;
 const WORD = /[\p{L}\p{N}]/u;
 const LATIN = /\p{Script=Latin}/u;
 
 /** One character folded: "" when it vanishes, " " when it separates words. */
 function foldChar(char: string): string {
-  if (APOSTROPHE.test(char) || MARK.test(char)) return "";
+  if (APOSTROPHE.test(char) || MARK.test(char) || FORMAT.test(char)) return "";
   if (!WORD.test(char)) return " ";
   const lower = char.toLowerCase();
   if (lower === "ё") return "е";
@@ -36,10 +38,9 @@ export function foldWithMap(text: string): { folded: string; map: number[] } {
         map.push(index);
       }
     } else {
-      for (const unit of piece) {
-        folded += unit;
-        map.push(index);
-      }
+      // One map entry per UTF-16 unit, so letters outside the BMP keep the two in step.
+      folded += piece;
+      for (let unit = 0; unit < piece.length; unit++) map.push(index);
     }
     index += char.length;
   }
@@ -50,8 +51,9 @@ export function foldWithMap(text: string): { folded: string; map: number[] } {
   return { folded, map };
 }
 
+/** Folded text alone. Composes first, so a query typed as и + breve still finds й. */
 export function fold(text: string): string {
-  return foldWithMap(text).folded;
+  return foldWithMap(text.normalize("NFC")).folded;
 }
 
 /** The distinct folded words of a query, in the order typed. */

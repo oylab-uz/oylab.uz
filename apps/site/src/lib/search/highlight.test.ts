@@ -32,6 +32,10 @@ describe("highlight", () => {
     expect(highlight("Research", [])).toEqual([{ text: "Research", hit: false }]);
   });
 
+  it("marks the right letters after a character outside the BMP", () => {
+    expect(marked("𝒪(n) cost of moon landing", ["moon"])).toBe("𝒪(n) cost of [moon] landing");
+  });
+
   it("merges overlapping matches", () => {
     expect(marked("Research", ["res", "resea"])).toBe("[Resea]rch");
   });

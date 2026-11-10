@@ -6,6 +6,7 @@ export type Segment = { text: string; hit: boolean };
 function occurrences(folded: string, token: string): number[] {
   const starts: number[] = [];
   const inside: number[] = [];
+  if (token === "") return starts;
   for (let at = folded.indexOf(token); at !== -1; at = folded.indexOf(token, at + 1)) {
     (at === 0 || folded[at - 1] === " " ? starts : inside).push(at);
   }

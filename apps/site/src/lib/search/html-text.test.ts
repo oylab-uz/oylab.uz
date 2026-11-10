@@ -26,6 +26,12 @@ describe("htmlToText", () => {
     expect(htmlToText('<p>A claim<sup><a href="#fn-1">1</a></sup> stands.</p>')).toBe("A claim stands.");
   });
 
+  it("is not fooled by > inside an attribute", () => {
+    expect(htmlToText('<p>Pipeline <img src="x.png" alt="data -> model" title="a > b"> and <a href="/" title="p > q">link</a> ok.</p>')).toBe(
+      "Pipeline and link ok.",
+    );
+  });
+
   it("keeps code", () => {
     expect(htmlToText("<pre><code>bun run build\n</code></pre>")).toBe("bun run build");
   });
