@@ -1,5 +1,6 @@
 import { GithubLogo, LinkedinLogo, XLogo } from "@phosphor-icons/react/ssr";
 import { getTranslations } from "next-intl/server";
+import { Seam } from "@/components/ornament/seam";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { cn, container } from "@/lib/cn";
@@ -16,7 +17,8 @@ export async function Join() {
   const roles = t.raw("roles") as string[];
 
   return (
-    <section id="contact" className="scroll-mt-16 border-t border-line">
+    <section id="contact" className="scroll-mt-16">
+      <Seam />
       <div className={cn(container, "grid gap-16 py-24 md:py-32 lg:grid-cols-12 lg:gap-10")}>
         <div className="lg:col-span-6">
           <Reveal>

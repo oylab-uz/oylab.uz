@@ -5,6 +5,10 @@
 /*
   OY Lab palette. Achromatic on purpose: every colour is OKLCH with zero
   chroma. "Surface" is the lit lunar surface, "Night" is the sky behind it.
+
+  The one exception is the ornament layer further down: tin (qalay) and two
+  atlas dyes, qirmiz red and sariq gold. They colour ornament strokes only,
+  never text and never a control.
 */
 :root {
   --bg: oklch(96.5% 0 0);
@@ -18,6 +22,13 @@
   --moon: oklch(99% 0 0);
   --moon-shadow: oklch(80% 0 0);
   --grain-opacity: 0.045;
+  --qalay: oklch(62% 0 0);
+  --atlas-qirmiz: #9e2b2b;
+  --atlas-sariq: #c08a1e;
+  --abr-veil: 0.7;
+  /* Masks, so the ornament takes its colour from a token and follows the theme. */
+  --nail-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 8'><circle cx='8' cy='4' r='1.5'/><circle cx='8' cy='4' r='3' fill='none' stroke='%23000' opacity='.55'/></svg>");
+  --burchak-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M.75 12V.75H12' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round'/><path d='M4 12V4h8' fill='none' stroke='%23000' stroke-linecap='round' opacity='.7'/><circle cx='2.5' cy='2.5' r='.9'/></svg>");
   color-scheme: light;
 }
 
@@ -33,6 +44,10 @@
   --moon: oklch(92% 0 0);
   --moon-shadow: oklch(24% 0 0);
   --grain-opacity: 0.07;
+  --qalay: oklch(56% 0 0);
+  --atlas-qirmiz: #d1625f;
+  --atlas-sariq: #e3bc63;
+  --abr-veil: 0.7;
   color-scheme: dark;
 }
 
@@ -47,6 +62,9 @@
   --color-ink-strong: var(--ink-strong);
   --color-moon: var(--moon);
   --color-moon-shadow: var(--moon-shadow);
+  --color-qalay: var(--qalay);
+  --color-atlas-qirmiz: var(--atlas-qirmiz);
+  --color-atlas-sariq: var(--atlas-sariq);
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-spectral), ui-serif, Georgia, serif;
@@ -331,5 +349,134 @@
     text-decoration: none;
     font-family: var(--font-mono);
     font-size: 0.75em;
+  }
+
+  /*
+    The ornament layer. Structure, not wallpaper: the rule between sections,
+    the band in the gutter, the corner of a frame, the arch around a portrait,
+    the figure in a diagram. Never behind running copy, always aria-hidden
+    unless it carries data. Keep it in this one block: a second
+    @layer components is dropped by the Turbopack loader.
+  */
+
+  /* The seam: a row of nailheads between major sections, as on the edge of a sandiq chest. */
+  .seam {
+    position: relative;
+    height: 8px;
+    pointer-events: none;
+    user-select: none;
+  }
+  .seam-nails {
+    height: 8px;
+    background-color: var(--qalay);
+    /* round: a whole number of nails, never half of one at the right edge. */
+    -webkit-mask: var(--nail-mask) round left center / 16px 8px;
+    mask: var(--nail-mask) round left center / 16px 8px;
+  }
+  /* An abr (ikat) band runs down each gutter across the seam, on screens wide enough to have a gutter. */
+  .seam-band {
+    position: absolute;
+    top: -92px;
+    display: none;
+    width: 24px;
+    height: 192px;
+    opacity: var(--abr-veil);
+    -webkit-mask-image: linear-gradient(transparent, #000 12px, #000 calc(100% - 12px), transparent);
+    mask-image: linear-gradient(transparent, #000 12px, #000 calc(100% - 12px), transparent);
+  }
+  .seam-band-start {
+    left: max(8px, calc((100% - 1400px) / 2 - 36px));
+  }
+  .seam-band-end {
+    right: max(8px, calc((100% - 1400px) / 2 - 36px));
+    transform: scaleX(-1);
+  }
+  @media (min-width: 1024px) {
+    .seam-band {
+      display: block;
+    }
+  }
+  .abr-warp {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .abr-dye path {
+    fill: none;
+    stroke-width: 1;
+  }
+  .abr-lead path {
+    stroke: var(--atlas-qirmiz);
+  }
+  .abr-second path {
+    stroke: var(--atlas-sariq);
+  }
+  /* Ikat bleeds where the binding ended: the tips of each dyed thread are half washed out. */
+  .abr-dye path.abr-feather {
+    stroke: var(--bg);
+    opacity: 0.55;
+  }
+
+  /* Burchak: the corner fittings of a chest, on two opposite corners of a frame. */
+  .burchak {
+    position: relative;
+  }
+  .burchak::before,
+  .burchak::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--qalay);
+    -webkit-mask: var(--burchak-mask) no-repeat center / contain;
+    mask: var(--burchak-mask) no-repeat center / contain;
+    pointer-events: none;
+    transition: background-color 0.3s ease-out;
+  }
+  .burchak::before {
+    top: -5px;
+    left: -5px;
+  }
+  .burchak::after {
+    right: -5px;
+    bottom: -5px;
+    transform: rotate(180deg);
+  }
+  .burchak:hover::before,
+  .burchak:hover::after {
+    background-color: var(--atlas-sariq);
+  }
+
+  /* Iwan: the pointed arch of a portal. The clip path lives in OrnamentDefs. */
+  .iwan {
+    clip-path: url(#iwan);
+  }
+
+  /* Girih: eight-point star tiles. A tile is hollow strapwork until its data-state fills it. */
+  .girih-strap {
+    fill: none;
+    stroke: var(--qalay);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .girih-fill {
+    fill: var(--ink);
+    opacity: 0;
+    transform: scale(0.7);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i, 0) * 32ms);
+  }
+  .girih-tile[data-state="passed"] .girih-fill {
+    opacity: 0.82;
+    transform: none;
+  }
+  .girih-tile[data-state="tonight"] .girih-fill {
+    fill: var(--atlas-sariq);
+    opacity: 1;
+    transform: none;
   }
 }

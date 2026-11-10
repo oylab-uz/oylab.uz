@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "@phosphor-icons/react/ssr";
 import { getTranslations } from "next-intl/server";
+import { Seam } from "@/components/ornament/seam";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Link } from "@/i18n/navigation";
 import { localeLabels, type Locale } from "@/i18n/routing";
@@ -13,7 +14,8 @@ export async function JournalTeaser({ posts, locale }: { posts: PostCard[]; loca
   const t = await getTranslations("journal");
 
   return (
-    <section id="journal" className="scroll-mt-16 border-t border-line">
+    <section id="journal" className="scroll-mt-16">
+      <Seam />
       <div className={cn(container, "py-20 md:py-24")}>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>

@@ -8,6 +8,7 @@
     "build": "next build",
     "lint": "eslint",
     "typecheck": "node scripts/fetch-snapshot.mjs && tsc --noEmit",
+    "test": "vitest run",
     "preview": "bun run build && wrangler dev",
     "deploy": "bun run build && wrangler deploy",
     "predev": "node scripts/fetch-snapshot.mjs",
@@ -32,6 +33,7 @@
     "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "vitest": "5.1.0",
     "wrangler": "4.157.0"
   }
 }

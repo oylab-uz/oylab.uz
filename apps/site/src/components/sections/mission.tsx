@@ -9,7 +9,7 @@ export async function Mission() {
   const goals = t.raw("goals") as Goal[];
 
   return (
-    <section className={cn(container, "py-24 md:py-32")}>
+    <section id="mission" className={cn(container, "scroll-mt-16 py-24 md:py-32")}>
       <div className="grid gap-14 lg:grid-cols-[2fr_1fr] lg:gap-20">
         <Reveal>
           <p className="eyebrow">{t("eyebrow")}</p>

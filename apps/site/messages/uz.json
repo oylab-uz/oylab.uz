@@ -202,5 +202,12 @@
     "title": "Nimadir qorongʼilashdi.",
     "lead": "Sahifani koʼrsatib boʼlmadi. Birozdan soʼng qayta urinib koʼring.",
     "retry": "Qayta urinish"
+  },
+  "girih": {
+    "axis": "shu oyning tunlari",
+    "legend": "toʼla koshin = oʼtgan tun",
+    "caption": "Qamariy oyning {night}-tuni · {phase}",
+    "label": "Qamariy oy girih koshinlarida: 30 tundan {night}-tun, {phase}",
+    "labelStatic": "Joriy qamariy oyning tunlari, girih koshinlari bilan chizilgan"
   }
 }

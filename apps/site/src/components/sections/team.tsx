@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { IwanOutline } from "@/components/ornament/iwan-outline";
+import { Seam } from "@/components/ornament/seam";
 import { PlaceholderTag } from "@/components/ui/placeholder-tag";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -11,7 +13,8 @@ export async function Team() {
   const a11y = await getTranslations("a11y");
 
   return (
-    <section id="team" className="scroll-mt-16 border-t border-line">
+    <section id="team" className="scroll-mt-16">
+      <Seam />
       <div className={cn(container, "py-24 md:py-32")}>
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} lead={t("lead")} />
 
@@ -26,18 +29,22 @@ export async function Team() {
               className={cn(index % 3 === 1 && "lg:mt-16", index % 2 === 1 && "sm:mt-10 lg:mt-16")}
             >
               <article className="group">
-                <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-                  <Image
-                    src={member.photo}
-                    alt={member.name}
-                    fill
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-                    className="object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-moon-shadow/20 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 dark:bg-moon/10 dark:mix-blend-screen"
-                  />
+                {/* The portrait sits in an iwan, the arched portal of a madrasa. */}
+                <div className="relative aspect-[4/5]">
+                  <div className="iwan absolute inset-0 overflow-hidden bg-surface">
+                    <Image
+                      src={member.photo}
+                      alt={member.name}
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                      className="object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                    />
+                    <div
+                      aria-hidden
+                      className="absolute inset-0 bg-moon-shadow/20 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 dark:bg-moon/10 dark:mix-blend-screen"
+                    />
+                  </div>
+                  <IwanOutline className="pointer-events-none absolute inset-0 size-full text-qalay" />
                 </div>
                 <div className="mt-5 flex items-start justify-between gap-4 border-t border-line pt-4">
                   <div>
